@@ -1,0 +1,44 @@
+async (page) => {
+ const checks=[],errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.reload();await page.evaluate(()=>SpatialEditor.loadProject(JSON.parse(document.querySelector('#editor-seed').textContent)));
+ const check=(v,m)=>{if(!v)throw Error(m);checks.push(m)};
+ await page.setViewportSize({width:1440,height:1000});
+ const curveId=await page.evaluate(()=>SpatialEditor.project.documents.find(d=>d.type==='curve').id);
+ await page.locator('#document-select').selectOption(curveId);
+ check(JSON.stringify(await page.locator('[data-curve-section]').evaluateAll(es=>es.map(e=>e.open)))==='[true,false,false,false]','title-only default');
+ await page.screenshot({path:'docs/曲线属性_桌面.png',fullPage:true});
+ await page.locator('[data-curve-section="title"] summary').click();
+ await page.locator('[data-curve-section="x"] summary').click();
+ const before=await page.evaluate(()=>SpatialEditor.document.curve.events.map(e=>StudioRender.eventPoint(SpatialEditor.document,e)));
+ await page.locator('button[data-stage-down]').first().click();
+ check(JSON.stringify(before)===JSON.stringify(await page.evaluate(()=>SpatialEditor.document.curve.events.map(e=>StudioRender.eventPoint(SpatialEditor.document,e)))),'stage reorder does not move curve');
+ await page.locator('[data-stage][data-key="label"]').first().fill('探索阶段');
+ check(await page.locator('[data-curve-section="x"]').getAttribute('open')!==null,'section stays expanded while typing');
+ await page.screenshot({path:'docs/X轴折叠菜单.png',fullPage:true});
+ await page.locator('[data-curve-section="x"] summary').click();
+ check(await page.locator('[data-curve-section="x"]').getAttribute('open')===null,'close section after typing without lost click');
+ await page.locator('[data-curve-section="curve"] summary').click();
+ await page.locator('[data-event-name]').first().focus();
+ await page.locator('[data-event-name]').first().fill('遭遇战');await page.keyboard.press('w');
+ check(await page.locator('[data-event-name]').first().inputValue()==='遭遇战w','typing W does not activate move');
+ await page.evaluate(()=>{const e=document.querySelector('[data-event-name]');e.dispatchEvent(new CompositionEvent('compositionstart',{bubbles:true}));e.dispatchEvent(new KeyboardEvent('keydown',{key:'Escape',code:'Escape',isComposing:true,bubbles:true}));e.dispatchEvent(new CompositionEvent('compositionend',{bubbles:true,data:'遭遇战'}))});
+ check(await page.locator('[data-event-name]').first().isVisible(),'composition does not close event editor');
+ await page.setViewportSize({width:900,height:900});
+ await page.screenshot({path:'docs/曲线属性_窄屏.png',fullPage:true});
+ await page.setViewportSize({width:1440,height:1000});
+ // New test document uses two simple planes, isolating the actual pointer path.
+ await page.evaluate(()=>{const A=SpatialEditor,M=StudioModel;A.createDocument('space','移动吸附验收');const d=A.document;d.objects=[];for(const x of [300,600]){const p=M.createObject(d,'plane',[x,300,0]);p.points=[[0,0],[100,0],[100,100],[0,100]];d.objects.push(p)}A.select(d.objects[0].id,false,true);A.setTool('move')});
+ await page.locator('#canvas').focus();await page.keyboard.press('e');check(await page.evaluate(()=>SpatialEditor.tool)==='rotate','real E switches to rotate');await page.keyboard.press('v');check(await page.evaluate(()=>SpatialEditor.tool)==='vertex','real V switches to vertex');
+ await page.locator('#canvas').dispatchEvent('keydown',{key:'Process',code:'KeyW',isComposing:true,keyCode:229});check(await page.evaluate(()=>SpatialEditor.tool)==='move','IME-shaped W event switches to move');
+ const camera=await page.evaluate(()=>SpatialEditor.camera),box=await page.locator('#stage').boundingBox(),at=p=>({x:box.x+(p[0]-camera.x)/camera.w*box.width,y:box.y+(p[1]-camera.y)/camera.h*box.height});
+ const from=at([350,350]),to=at([545,350]);const undo=await page.evaluate(()=>SpatialEditor.undoCount);
+ await page.mouse.move(from.x,from.y);await page.mouse.down();await page.mouse.move(to.x,to.y,{steps:12});
+ check(await page.locator('[data-move-snap-guide]').count()>0,'actual pointer shows snap guide');
+ await page.screenshot({path:'docs/移动吸附_拖动中.png',fullPage:true});await page.mouse.up();
+ check(Math.abs(await page.evaluate(()=>SpatialEditor.document.objects[0].position[0])-500)<.001,'plane edge connects exactly');
+ check(await page.evaluate(()=>SpatialEditor.undoCount)===undo+1,'whole move is one undo');
+ await page.keyboard.press('Control+z');check(Math.abs(await page.evaluate(()=>SpatialEditor.document.objects[0].position[0])-300)<.001,'Ctrl Z undoes snapped move');
+ await page.evaluate(()=>SpatialEditor.command('svg'));await page.locator('#export-preview-svg').waitFor({state:'visible'});check(await page.locator('#export-preview-svg [data-move-snap-guide]').count()===0,'snap guides excluded from export');await page.locator('[data-action="export-close"]').first().click();
+ check(errors.length===0,'no application script errors');
+ console.log(JSON.stringify({checks,errors,viewport:await page.evaluate(()=>({width:innerWidth,height:innerHeight}))},null,2));
+}
