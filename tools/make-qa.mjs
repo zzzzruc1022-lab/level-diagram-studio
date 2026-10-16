@@ -1,0 +1,14 @@
+import fs from 'node:fs';import vm from 'node:vm';
+const ctx={window:{}};for(const name of ['model','geometry','model-features','curved-geometry','creation-colors','model-v10'])vm.runInNewContext(fs.readFileSync(new URL('../src/'+name+'.js',import.meta.url),'utf8'),ctx);const M=ctx.window.StudioModel;
+const d=M.createDocument('space','轻量空间示例');d.objects=[];d.counters={};const f2={id:M.uid(),name:'二层',height:160,visible:true};d.floors.push(f2);
+const add=(type,pos,props={},doc=d)=>{const o=M.createObject(doc,type,pos);Object.assign(o,props);doc.objects.push(o);return o};
+const lower=add('plane',[560,430,0],{name:'一层平台',points:[[-260,-170],[260,-170],[260,170],[-260,170]]});
+add('plane',[740,260,0],{name:'二层平台',floor:f2.id,points:[[-160,-110],[160,-110],[160,110],[-160,110]],fill:'#dce6f2'});
+const wall=add('wall',[560,260,0],{points:[[-260,0],[260,0],[260,180],[-260,180]]});add('hole',[0,0,0],{host:wall.id,points:[[-60,50],[10,50],[10,125],[-60,125]]});
+add('hole',[0,0,0],{name:'圆形空洞',host:lower.id,points:[[-75,20],[-25,20],[-25,70],[-75,70]],shape:'ellipse'});
+add('stairs',[780,450,0],{flights:[{id:M.uid(),points:[[-35,-100],[35,-100],[35,100],[-35,100]],start:160,end:0,steps:12}]});
+add('ladder',[830,280,0],{span:45,end:160});add('spiral',[380,420,0],{outer:70,inner:20,end:160,steps:13,turns:.5});
+add('text',[600,550,0],{text:'一层平台',size:24});add('text',[740,260,0],{floor:f2.id,text:'二层平台',size:24});add('route',[500,540,0],{points:[[0,0,0],[140,20,0],[260,-80,0],[280,-250,160]],width:4});
+add('plane',[990,510,0],{name:'椭圆模板',points:[[-75,-50],[75,-50],[75,50],[-75,50]],shape:'ellipse',fill:'#f0e8d8'});
+const curve=M.createDocument('curve','通用曲线示例'),p=M.validate({format:'level-spatial-editor',version:7,documents:[d,curve],activeDocument:d.id}),root=new URL('../',import.meta.url);
+fs.writeFileSync(new URL('data/qa-project.json',root),JSON.stringify(p,null,2));const html=fs.readFileSync(new URL('dist/index.html',root),'utf8').replace(/(<script id="editor-seed" type="application\/json">).*?(<\/script>)/s,(_,a,b)=>a+JSON.stringify(p).replaceAll('</','<\\/')+b);fs.writeFileSync(new URL('dist/qa.html',root),html);console.log('QA: light space and generic curve; '+d.objects.length+' normal components.');

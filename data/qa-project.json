@@ -1,0 +1,717 @@
+{
+  "format": "level-spatial-editor",
+  "version": 7,
+  "documents": [
+    {
+      "id": "o-mv9c70ih-baw8dpm",
+      "type": "space",
+      "name": "轻量空间示例",
+      "width": 1200,
+      "height": 800,
+      "background": "#ffffff",
+      "gridVisible": true,
+      "objects": [
+        {
+          "id": "o-mv9c70ii-j9fdtu7",
+          "type": "plane",
+          "name": "一层平台",
+          "floor": "o-mv9c70ii-dtex1x2",
+          "position": [
+            560,
+            430,
+            0
+          ],
+          "orientation": [
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1
+          ],
+          "visible": true,
+          "locked": false,
+          "opacity": 1,
+          "points": [
+            [
+              -260,
+              -170
+            ],
+            [
+              260,
+              -170
+            ],
+            [
+              260,
+              170
+            ],
+            [
+              -260,
+              170
+            ]
+          ],
+          "thickness": 14,
+          "fill": "#eedbdf",
+          "stroke": "#94888a",
+          "width": 1.5
+        },
+        {
+          "id": "o-mv9c70ii-q2ay3uz",
+          "type": "plane",
+          "name": "二层平台",
+          "floor": "o-mv9c70ii-zve6y7t",
+          "position": [
+            740,
+            260,
+            0
+          ],
+          "orientation": [
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1
+          ],
+          "visible": true,
+          "locked": false,
+          "opacity": 1,
+          "points": [
+            [
+              -160,
+              -110
+            ],
+            [
+              160,
+              -110
+            ],
+            [
+              160,
+              110
+            ],
+            [
+              -160,
+              110
+            ]
+          ],
+          "thickness": 14,
+          "fill": "#dce6f2",
+          "stroke": "#958275",
+          "width": 1.5
+        },
+        {
+          "id": "o-mv9c70ii-ddfjept",
+          "type": "wall",
+          "name": "墙壁1",
+          "floor": "o-mv9c70ii-dtex1x2",
+          "position": [
+            560,
+            260,
+            0
+          ],
+          "orientation": [
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1
+          ],
+          "visible": true,
+          "locked": false,
+          "opacity": 1,
+          "points": [
+            [
+              -260,
+              0
+            ],
+            [
+              260,
+              0
+            ],
+            [
+              260,
+              180
+            ],
+            [
+              -260,
+              180
+            ]
+          ],
+          "thickness": 18,
+          "fill": "#dce6f2",
+          "stroke": "#7693af",
+          "width": 1.5
+        },
+        {
+          "id": "o-mv9c70ii-ga8rn8t",
+          "type": "hole",
+          "name": "空洞1",
+          "floor": "o-mv9c70ii-dtex1x2",
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "orientation": [
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1
+          ],
+          "visible": true,
+          "locked": false,
+          "opacity": 1,
+          "host": "o-mv9c70ii-ddfjept",
+          "points": [
+            [
+              -60,
+              50
+            ],
+            [
+              10,
+              50
+            ],
+            [
+              10,
+              125
+            ],
+            [
+              -60,
+              125
+            ]
+          ]
+        },
+        {
+          "id": "o-mv9c70ii-0e8c1e1",
+          "type": "hole",
+          "name": "圆形空洞",
+          "floor": "o-mv9c70ii-dtex1x2",
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "orientation": [
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1
+          ],
+          "visible": true,
+          "locked": false,
+          "opacity": 1,
+          "host": "o-mv9c70ii-j9fdtu7",
+          "points": [
+            [
+              -75,
+              20
+            ],
+            [
+              -25,
+              20
+            ],
+            [
+              -25,
+              70
+            ],
+            [
+              -75,
+              70
+            ]
+          ],
+          "shape": "ellipse"
+        },
+        {
+          "id": "o-mv9c70ii-8uhw360",
+          "type": "stairs",
+          "name": "楼梯1",
+          "floor": "o-mv9c70ii-dtex1x2",
+          "position": [
+            780,
+            450,
+            0
+          ],
+          "orientation": [
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1
+          ],
+          "visible": true,
+          "locked": false,
+          "opacity": 1,
+          "flights": [
+            {
+              "id": "o-mv9c70ii-ky3i9jt",
+              "points": [
+                [
+                  -35,
+                  -100
+                ],
+                [
+                  35,
+                  -100
+                ],
+                [
+                  35,
+                  100
+                ],
+                [
+                  -35,
+                  100
+                ]
+              ],
+              "start": 160,
+              "end": 0,
+              "steps": 12
+            }
+          ],
+          "thickness": 12,
+          "fill": "#e8dfce",
+          "stroke": "#9f8a68",
+          "width": 1,
+          "countMode": "auto",
+          "spacing": 20,
+          "riseSpacing": 14
+        },
+        {
+          "id": "o-mv9c70ii-1qiv20q",
+          "type": "ladder",
+          "name": "爬梯1",
+          "floor": "o-mv9c70ii-dtex1x2",
+          "position": [
+            830,
+            280,
+            0
+          ],
+          "orientation": [
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1
+          ],
+          "visible": true,
+          "locked": false,
+          "opacity": 1,
+          "span": 45,
+          "start": 0,
+          "end": 160,
+          "rungs": 10,
+          "fill": "#e8dfce",
+          "stroke": "#9f8a68",
+          "width": 1,
+          "countMode": "auto",
+          "spacing": 20,
+          "riseSpacing": 14,
+          "thickness": 6,
+          "railWidth": 6
+        },
+        {
+          "id": "o-mv9c70ii-iwnlij8",
+          "type": "spiral",
+          "name": "旋转楼梯1",
+          "floor": "o-mv9c70ii-dtex1x2",
+          "position": [
+            380,
+            420,
+            0
+          ],
+          "orientation": [
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1
+          ],
+          "visible": true,
+          "locked": false,
+          "opacity": 1,
+          "inner": 20,
+          "outer": 70,
+          "start": 0,
+          "end": 160,
+          "turns": 0.5,
+          "angle": 0,
+          "direction": 1,
+          "steps": 13,
+          "thickness": 12,
+          "fill": "#e8dfce",
+          "stroke": "#9f8a68",
+          "width": 1,
+          "countMode": "auto",
+          "spacing": 22,
+          "riseSpacing": 14
+        },
+        {
+          "id": "o-mv9c70ii-x5imh36",
+          "type": "text",
+          "name": "文字1",
+          "floor": "o-mv9c70ii-dtex1x2",
+          "position": [
+            600,
+            550,
+            0
+          ],
+          "orientation": [
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1
+          ],
+          "visible": true,
+          "locked": false,
+          "opacity": 1,
+          "text": "一层平台",
+          "size": 24,
+          "align": "middle",
+          "colorMode": "auto",
+          "color": "#24343e",
+          "textAngle": 0,
+          "padding": 8,
+          "borderWidth": 0,
+          "borderColor": "#72849b",
+          "borderStyle": "solid",
+          "glyphWidth": 0,
+          "glyphColor": "#ffffff"
+        },
+        {
+          "id": "o-mv9c70ii-meqo0x8",
+          "type": "text",
+          "name": "文字2",
+          "floor": "o-mv9c70ii-zve6y7t",
+          "position": [
+            740,
+            260,
+            0
+          ],
+          "orientation": [
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1
+          ],
+          "visible": true,
+          "locked": false,
+          "opacity": 1,
+          "text": "二层平台",
+          "size": 24,
+          "align": "middle",
+          "colorMode": "auto",
+          "color": "#24343e",
+          "textAngle": 0,
+          "padding": 8,
+          "borderWidth": 0,
+          "borderColor": "#72849b",
+          "borderStyle": "solid",
+          "glyphWidth": 0,
+          "glyphColor": "#ffffff"
+        },
+        {
+          "id": "o-mv9c70ii-yfsaqb7",
+          "type": "route",
+          "name": "路线1",
+          "floor": "o-mv9c70ii-dtex1x2",
+          "position": [
+            500,
+            540,
+            0
+          ],
+          "orientation": [
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1
+          ],
+          "visible": true,
+          "locked": false,
+          "opacity": 1,
+          "points": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              140,
+              20,
+              0
+            ],
+            [
+              260,
+              -80,
+              0
+            ],
+            [
+              280,
+              -250,
+              160
+            ]
+          ],
+          "color": "#668aad",
+          "width": 4,
+          "style": "solid",
+          "curve": "smooth",
+          "arrow": "end",
+          "outlineWidth": 0,
+          "outlineColor": "#ffffff"
+        },
+        {
+          "id": "o-mv9c70ii-70qqif6",
+          "type": "plane",
+          "name": "椭圆模板",
+          "floor": "o-mv9c70ii-dtex1x2",
+          "position": [
+            990,
+            510,
+            0
+          ],
+          "orientation": [
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1
+          ],
+          "visible": true,
+          "locked": false,
+          "opacity": 1,
+          "points": [
+            [
+              -75,
+              -50
+            ],
+            [
+              75,
+              -50
+            ],
+            [
+              75,
+              50
+            ],
+            [
+              -75,
+              50
+            ]
+          ],
+          "thickness": 14,
+          "fill": "#f0e8d8",
+          "stroke": "#8f8793",
+          "width": 1.5,
+          "shape": "ellipse"
+        }
+      ],
+      "counters": {
+        "plane": 3,
+        "wall": 1,
+        "hole": 2,
+        "stairs": 1,
+        "ladder": 1,
+        "spiral": 1,
+        "text": 2,
+        "route": 1
+      },
+      "floors": [
+        {
+          "id": "o-mv9c70ii-dtex1x2",
+          "name": "一层",
+          "height": 0,
+          "visible": true
+        },
+        {
+          "id": "o-mv9c70ii-zve6y7t",
+          "name": "二层",
+          "height": 160,
+          "visible": true
+        }
+      ],
+      "activeFloor": "o-mv9c70ii-dtex1x2",
+      "unit": "单位",
+      "heightReferences": true,
+      "stairArrows": true,
+      "planeColors": {
+        "used": [
+          "#dce8df",
+          "#eedbdf",
+          "#f0d2bc",
+          "#e6daed"
+        ],
+        "last": "#e6daed"
+      }
+    },
+    {
+      "id": "o-mv9c70ij-kgcgsyd",
+      "type": "curve",
+      "name": "通用曲线示例",
+      "width": 1400,
+      "height": 850,
+      "background": "#ffffff",
+      "gridVisible": false,
+      "objects": [],
+      "counters": {},
+      "curve": {
+        "title": "游玩节奏",
+        "subtitle": "",
+        "xAxis": {
+          "mode": "stages",
+          "title": "游玩阶段",
+          "unit": "",
+          "min": 0,
+          "max": 10,
+          "ticks": [
+            {
+              "id": "o-mv9c70ij-qeq44g9",
+              "label": "0",
+              "value": 0
+            },
+            {
+              "id": "o-mv9c70ij-tzl0ghq",
+              "label": "5",
+              "value": 5
+            },
+            {
+              "id": "o-mv9c70ij-4ps013v",
+              "label": "10",
+              "value": 10
+            }
+          ],
+          "titleSize": 28
+        },
+        "yAxis": {
+          "title": "强度",
+          "min": 0,
+          "max": 1,
+          "ticks": [
+            {
+              "id": "o-mv9c70ij-531uxnq",
+              "label": "低",
+              "value": 0
+            },
+            {
+              "id": "o-mv9c70ij-xbgbuvi",
+              "label": "中",
+              "value": 0.5
+            },
+            {
+              "id": "o-mv9c70ij-bswn0p2",
+              "label": "高",
+              "value": 1
+            }
+          ],
+          "titleSize": 28
+        },
+        "stages": [
+          {
+            "id": "o-mv9c70ij-kvs1xio",
+            "label": "阶段1",
+            "color": "#8fa9c3"
+          },
+          {
+            "id": "o-mv9c70ij-d70h9e8",
+            "label": "阶段2",
+            "color": "#94af9c"
+          },
+          {
+            "id": "o-mv9c70ij-lx0uehi",
+            "label": "阶段3",
+            "color": "#b9a0bb"
+          }
+        ],
+        "events": [
+          {
+            "id": "o-mv9c70ij-svvlfe5",
+            "label": "事件1",
+            "stage": "o-mv9c70ij-kvs1xio",
+            "fraction": 0.5,
+            "x": 0.16666666666666666,
+            "y": 0.25,
+            "labelPosition": "above"
+          },
+          {
+            "id": "o-mv9c70ij-kw09zdn",
+            "label": "事件2",
+            "stage": "o-mv9c70ij-d70h9e8",
+            "fraction": 0.5,
+            "x": 0.5,
+            "y": 0.75,
+            "labelPosition": "above"
+          },
+          {
+            "id": "o-mv9c70ij-hxkuw3o",
+            "label": "事件3",
+            "stage": "o-mv9c70ij-lx0uehi",
+            "fraction": 0.5,
+            "x": 0.8333333333333334,
+            "y": 0.45,
+            "labelPosition": "above"
+          }
+        ],
+        "showBands": true,
+        "lineColor": "#6b95bc",
+        "lineWidth": 3.5,
+        "outlineColor": "#ffffff",
+        "outlineWidth": 0,
+        "fonts": {
+          "x": 26,
+          "y": 26,
+          "event": 28
+        },
+        "titleSize": 44,
+        "subtitleSize": 24
+      }
+    }
+  ],
+  "activeDocument": "o-mv9c70ih-baw8dpm"
+}

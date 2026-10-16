@@ -1,0 +1,1120 @@
+{
+  "format": "level-spatial-editor",
+  "version": 7,
+  "documents": [
+    {
+      "id": "o-mvat6a4j-52doy81",
+      "type": "space",
+      "name": "两层小楼示例",
+      "width": 1200,
+      "height": 800,
+      "background": "#ffffff",
+      "gridVisible": false,
+      "objects": [
+        {
+          "id": "o-mvat6a4n-c1n41lw",
+          "type": "plane",
+          "name": "一层地面",
+          "floor": "o-mvat6a4j-wvxfxsp",
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "orientation": [
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1
+          ],
+          "visible": true,
+          "locked": false,
+          "opacity": 1,
+          "points": [
+            [
+              0,
+              0
+            ],
+            [
+              720,
+              0
+            ],
+            [
+              720,
+              520
+            ],
+            [
+              0,
+              520
+            ]
+          ],
+          "thickness": 20,
+          "fill": "#e4ebe1",
+          "stroke": "#94888a",
+          "width": 1.5
+        },
+        {
+          "id": "o-mvat6a4n-d67kloa",
+          "type": "wall",
+          "name": "后外墙",
+          "floor": "o-mvat6a4j-wvxfxsp",
+          "position": [
+            360,
+            0,
+            0
+          ],
+          "orientation": [
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1
+          ],
+          "visible": true,
+          "locked": false,
+          "opacity": 1,
+          "points": [
+            [
+              -360,
+              0
+            ],
+            [
+              360,
+              0
+            ],
+            [
+              360,
+              240
+            ],
+            [
+              -360,
+              240
+            ]
+          ],
+          "thickness": 18,
+          "fill": "#dce6ec",
+          "stroke": "#788e9f",
+          "width": 1.5
+        },
+        {
+          "id": "o-mvat6a4n-vz5sd32",
+          "type": "hole",
+          "name": "后窗一",
+          "floor": "o-mvat6a4j-wvxfxsp",
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "orientation": [
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1
+          ],
+          "visible": true,
+          "locked": false,
+          "opacity": 1,
+          "host": "o-mvat6a4n-d67kloa",
+          "points": [
+            [
+              -240,
+              85
+            ],
+            [
+              -100,
+              85
+            ],
+            [
+              -100,
+              175
+            ],
+            [
+              -240,
+              175
+            ]
+          ]
+        },
+        {
+          "id": "o-mvat6a4n-t5r6xq3",
+          "type": "hole",
+          "name": "后窗二",
+          "floor": "o-mvat6a4j-wvxfxsp",
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "orientation": [
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1
+          ],
+          "visible": true,
+          "locked": false,
+          "opacity": 1,
+          "host": "o-mvat6a4n-d67kloa",
+          "points": [
+            [
+              70,
+              85
+            ],
+            [
+              210,
+              85
+            ],
+            [
+              210,
+              175
+            ],
+            [
+              70,
+              175
+            ]
+          ]
+        },
+        {
+          "id": "o-mvat6a4n-eax5tql",
+          "type": "wall",
+          "name": "右外墙",
+          "floor": "o-mvat6a4j-wvxfxsp",
+          "position": [
+            720,
+            260,
+            0
+          ],
+          "orientation": [
+            6.123233995736766e-17,
+            -1,
+            0,
+            1,
+            6.123233995736766e-17,
+            0,
+            0,
+            0,
+            1
+          ],
+          "visible": true,
+          "locked": false,
+          "opacity": 1,
+          "points": [
+            [
+              -260,
+              0
+            ],
+            [
+              260,
+              0
+            ],
+            [
+              260,
+              240
+            ],
+            [
+              -260,
+              240
+            ]
+          ],
+          "thickness": 18,
+          "fill": "#dce6ec",
+          "stroke": "#788e9f",
+          "width": 1.5
+        },
+        {
+          "id": "o-mvat6a4n-528wq8r",
+          "type": "hole",
+          "name": "侧窗",
+          "floor": "o-mvat6a4j-wvxfxsp",
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "orientation": [
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1
+          ],
+          "visible": true,
+          "locked": false,
+          "opacity": 1,
+          "host": "o-mvat6a4n-eax5tql",
+          "points": [
+            [
+              -110,
+              85
+            ],
+            [
+              30,
+              85
+            ],
+            [
+              30,
+              175
+            ],
+            [
+              -110,
+              175
+            ]
+          ]
+        },
+        {
+          "id": "o-mvat6a4n-hjm27m5",
+          "type": "wall",
+          "name": "左侧剖切墙",
+          "floor": "o-mvat6a4j-wvxfxsp",
+          "position": [
+            0,
+            260,
+            0
+          ],
+          "orientation": [
+            6.123233995736766e-17,
+            -1,
+            0,
+            1,
+            6.123233995736766e-17,
+            0,
+            0,
+            0,
+            1
+          ],
+          "visible": true,
+          "locked": false,
+          "opacity": 1,
+          "points": [
+            [
+              -260,
+              0
+            ],
+            [
+              260,
+              0
+            ],
+            [
+              260,
+              55
+            ],
+            [
+              -260,
+              55
+            ]
+          ],
+          "thickness": 18,
+          "fill": "#dce6ec",
+          "stroke": "#788e9f",
+          "width": 1.5
+        },
+        {
+          "id": "o-mvat6a4n-rf06nxz",
+          "type": "wall",
+          "name": "门前左矮墙",
+          "floor": "o-mvat6a4j-wvxfxsp",
+          "position": [
+            65,
+            520,
+            0
+          ],
+          "orientation": [
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1
+          ],
+          "visible": true,
+          "locked": false,
+          "opacity": 1,
+          "points": [
+            [
+              -65,
+              0
+            ],
+            [
+              65,
+              0
+            ],
+            [
+              65,
+              55
+            ],
+            [
+              -65,
+              55
+            ]
+          ],
+          "thickness": 18,
+          "fill": "#dce6ec",
+          "stroke": "#788e9f",
+          "width": 1.5
+        },
+        {
+          "id": "o-mvat6a4n-z8zhows",
+          "type": "wall",
+          "name": "门前右矮墙",
+          "floor": "o-mvat6a4j-wvxfxsp",
+          "position": [
+            480,
+            520,
+            0
+          ],
+          "orientation": [
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1
+          ],
+          "visible": true,
+          "locked": false,
+          "opacity": 1,
+          "points": [
+            [
+              -240,
+              0
+            ],
+            [
+              240,
+              0
+            ],
+            [
+              240,
+              55
+            ],
+            [
+              -240,
+              55
+            ]
+          ],
+          "thickness": 18,
+          "fill": "#dce6ec",
+          "stroke": "#788e9f",
+          "width": 1.5
+        },
+        {
+          "id": "o-mvat6a4n-d9sbywm",
+          "type": "wall",
+          "name": "房间隔墙",
+          "floor": "o-mvat6a4j-wvxfxsp",
+          "position": [
+            450,
+            130,
+            0
+          ],
+          "orientation": [
+            6.123233995736766e-17,
+            -1,
+            0,
+            1,
+            6.123233995736766e-17,
+            0,
+            0,
+            0,
+            1
+          ],
+          "visible": true,
+          "locked": false,
+          "opacity": 1,
+          "points": [
+            [
+              -130,
+              0
+            ],
+            [
+              130,
+              0
+            ],
+            [
+              130,
+              240
+            ],
+            [
+              -130,
+              240
+            ]
+          ],
+          "thickness": 18,
+          "fill": "#dce6ec",
+          "stroke": "#788e9f",
+          "width": 1.5
+        },
+        {
+          "id": "o-mvat6a4n-h6t5jwz",
+          "type": "hole",
+          "name": "室内门",
+          "floor": "o-mvat6a4j-wvxfxsp",
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "orientation": [
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1
+          ],
+          "visible": true,
+          "locked": false,
+          "opacity": 1,
+          "host": "o-mvat6a4n-d9sbywm",
+          "points": [
+            [
+              15,
+              1
+            ],
+            [
+              115,
+              1
+            ],
+            [
+              115,
+              205
+            ],
+            [
+              15,
+              205
+            ]
+          ]
+        },
+        {
+          "id": "o-mvat6a4n-8jbxdrz",
+          "type": "plane",
+          "name": "二层楼板",
+          "floor": "o-mvat6a4n-x09iq9w",
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "orientation": [
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1
+          ],
+          "visible": true,
+          "locked": false,
+          "opacity": 1,
+          "points": [
+            [
+              0,
+              0
+            ],
+            [
+              720,
+              0
+            ],
+            [
+              720,
+              520
+            ],
+            [
+              0,
+              520
+            ]
+          ],
+          "thickness": 20,
+          "fill": "#eee2d6",
+          "stroke": "#958275",
+          "width": 1.5
+        },
+        {
+          "id": "o-mvat6a4n-nl1vvxj",
+          "type": "hole",
+          "name": "楼梯井",
+          "floor": "o-mvat6a4n-x09iq9w",
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "orientation": [
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1
+          ],
+          "visible": true,
+          "locked": false,
+          "opacity": 1,
+          "host": "o-mvat6a4n-8jbxdrz",
+          "points": [
+            [
+              46,
+              140
+            ],
+            [
+              179,
+              140
+            ],
+            [
+              179,
+              480
+            ],
+            [
+              46,
+              480
+            ]
+          ]
+        },
+        {
+          "id": "o-mvat6a4n-dhch7b3",
+          "type": "wall",
+          "name": "后外墙",
+          "floor": "o-mvat6a4n-x09iq9w",
+          "position": [
+            360,
+            0,
+            0
+          ],
+          "orientation": [
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1
+          ],
+          "visible": true,
+          "locked": false,
+          "opacity": 1,
+          "points": [
+            [
+              -360,
+              0
+            ],
+            [
+              360,
+              0
+            ],
+            [
+              360,
+              240
+            ],
+            [
+              -360,
+              240
+            ]
+          ],
+          "thickness": 18,
+          "fill": "#dce6ec",
+          "stroke": "#788e9f",
+          "width": 1.5
+        },
+        {
+          "id": "o-mvat6a4n-pd6uyu3",
+          "type": "hole",
+          "name": "后窗一",
+          "floor": "o-mvat6a4n-x09iq9w",
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "orientation": [
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1
+          ],
+          "visible": true,
+          "locked": false,
+          "opacity": 1,
+          "host": "o-mvat6a4n-dhch7b3",
+          "points": [
+            [
+              -240,
+              85
+            ],
+            [
+              -100,
+              85
+            ],
+            [
+              -100,
+              175
+            ],
+            [
+              -240,
+              175
+            ]
+          ]
+        },
+        {
+          "id": "o-mvat6a4n-ls9asg6",
+          "type": "hole",
+          "name": "后窗二",
+          "floor": "o-mvat6a4n-x09iq9w",
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "orientation": [
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1
+          ],
+          "visible": true,
+          "locked": false,
+          "opacity": 1,
+          "host": "o-mvat6a4n-dhch7b3",
+          "points": [
+            [
+              70,
+              85
+            ],
+            [
+              210,
+              85
+            ],
+            [
+              210,
+              175
+            ],
+            [
+              70,
+              175
+            ]
+          ]
+        },
+        {
+          "id": "o-mvat6a4n-8s4lc3m",
+          "type": "wall",
+          "name": "右外墙",
+          "floor": "o-mvat6a4n-x09iq9w",
+          "position": [
+            720,
+            260,
+            0
+          ],
+          "orientation": [
+            6.123233995736766e-17,
+            -1,
+            0,
+            1,
+            6.123233995736766e-17,
+            0,
+            0,
+            0,
+            1
+          ],
+          "visible": true,
+          "locked": false,
+          "opacity": 1,
+          "points": [
+            [
+              -260,
+              0
+            ],
+            [
+              260,
+              0
+            ],
+            [
+              260,
+              240
+            ],
+            [
+              -260,
+              240
+            ]
+          ],
+          "thickness": 18,
+          "fill": "#dce6ec",
+          "stroke": "#788e9f",
+          "width": 1.5
+        },
+        {
+          "id": "o-mvat6a4n-1ouesus",
+          "type": "hole",
+          "name": "侧窗",
+          "floor": "o-mvat6a4n-x09iq9w",
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "orientation": [
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1
+          ],
+          "visible": true,
+          "locked": false,
+          "opacity": 1,
+          "host": "o-mvat6a4n-8s4lc3m",
+          "points": [
+            [
+              -110,
+              85
+            ],
+            [
+              30,
+              85
+            ],
+            [
+              30,
+              175
+            ],
+            [
+              -110,
+              175
+            ]
+          ]
+        },
+        {
+          "id": "o-mvat6a4n-iuardzo",
+          "type": "wall",
+          "name": "左侧剖切墙",
+          "floor": "o-mvat6a4n-x09iq9w",
+          "position": [
+            0,
+            260,
+            0
+          ],
+          "orientation": [
+            6.123233995736766e-17,
+            -1,
+            0,
+            1,
+            6.123233995736766e-17,
+            0,
+            0,
+            0,
+            1
+          ],
+          "visible": true,
+          "locked": false,
+          "opacity": 1,
+          "points": [
+            [
+              -260,
+              0
+            ],
+            [
+              260,
+              0
+            ],
+            [
+              260,
+              55
+            ],
+            [
+              -260,
+              55
+            ]
+          ],
+          "thickness": 18,
+          "fill": "#dce6ec",
+          "stroke": "#788e9f",
+          "width": 1.5
+        },
+        {
+          "id": "o-mvat6a4n-5sy4ifj",
+          "type": "wall",
+          "name": "门前左矮墙",
+          "floor": "o-mvat6a4n-x09iq9w",
+          "position": [
+            65,
+            520,
+            0
+          ],
+          "orientation": [
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1
+          ],
+          "visible": true,
+          "locked": false,
+          "opacity": 1,
+          "points": [
+            [
+              -65,
+              0
+            ],
+            [
+              65,
+              0
+            ],
+            [
+              65,
+              55
+            ],
+            [
+              -65,
+              55
+            ]
+          ],
+          "thickness": 18,
+          "fill": "#dce6ec",
+          "stroke": "#788e9f",
+          "width": 1.5
+        },
+        {
+          "id": "o-mvat6a4n-4zl7tpj",
+          "type": "wall",
+          "name": "门前右矮墙",
+          "floor": "o-mvat6a4n-x09iq9w",
+          "position": [
+            480,
+            520,
+            0
+          ],
+          "orientation": [
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1
+          ],
+          "visible": true,
+          "locked": false,
+          "opacity": 1,
+          "points": [
+            [
+              -240,
+              0
+            ],
+            [
+              240,
+              0
+            ],
+            [
+              240,
+              55
+            ],
+            [
+              -240,
+              55
+            ]
+          ],
+          "thickness": 18,
+          "fill": "#dce6ec",
+          "stroke": "#788e9f",
+          "width": 1.5
+        },
+        {
+          "id": "o-mvat6a4n-etk9agg",
+          "type": "wall",
+          "name": "房间隔墙",
+          "floor": "o-mvat6a4n-x09iq9w",
+          "position": [
+            450,
+            130,
+            0
+          ],
+          "orientation": [
+            6.123233995736766e-17,
+            -1,
+            0,
+            1,
+            6.123233995736766e-17,
+            0,
+            0,
+            0,
+            1
+          ],
+          "visible": true,
+          "locked": false,
+          "opacity": 1,
+          "points": [
+            [
+              -130,
+              0
+            ],
+            [
+              130,
+              0
+            ],
+            [
+              130,
+              75
+            ],
+            [
+              -130,
+              75
+            ]
+          ],
+          "thickness": 18,
+          "fill": "#dce6ec",
+          "stroke": "#788e9f",
+          "width": 1.5
+        },
+        {
+          "id": "o-mvat6a4n-uf3az49",
+          "type": "stairs",
+          "name": "通往二层的楼梯",
+          "floor": "o-mvat6a4j-wvxfxsp",
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "orientation": [
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1
+          ],
+          "visible": true,
+          "locked": false,
+          "opacity": 1,
+          "flights": [
+            {
+              "id": "o-mvat6a4n-8713x4p",
+              "points": [
+                [
+                  60,
+                  460
+                ],
+                [
+                  165,
+                  460
+                ],
+                [
+                  165,
+                  120
+                ],
+                [
+                  60,
+                  120
+                ]
+              ],
+              "start": 0,
+              "end": 240,
+              "steps": 16,
+              "countMode": "manual"
+            }
+          ],
+          "thickness": 12,
+          "fill": "#e8dfce",
+          "stroke": "#9f8a68",
+          "width": 1,
+          "countMode": "auto",
+          "spacing": 20,
+          "riseSpacing": 14
+        }
+      ],
+      "counters": {
+        "plane": 3,
+        "text": 1,
+        "wall": 12,
+        "hole": 8,
+        "stairs": 1
+      },
+      "floors": [
+        {
+          "id": "o-mvat6a4j-wvxfxsp",
+          "name": "一层",
+          "height": 0,
+          "visible": true
+        },
+        {
+          "id": "o-mvat6a4n-x09iq9w",
+          "name": "二层",
+          "height": 240,
+          "visible": true
+        }
+      ],
+      "activeFloor": "o-mvat6a4j-wvxfxsp",
+      "unit": "单位",
+      "heightReferences": false,
+      "stairArrows": true,
+      "planeColors": {
+        "used": [
+          "#dce8df",
+          "#eedbdf",
+          "#f0d2bc"
+        ],
+        "last": "#f0d2bc"
+      }
+    }
+  ],
+  "activeDocument": "o-mvat6a4j-52doy81"
+}

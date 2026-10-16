@@ -1,0 +1,24 @@
+{
+  "name": "level-diagram-studio",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "node tools/build.mjs",
+    "test": "node tests/verify-v7.cjs && node tests/verify-v8.cjs && node tests/verify-v9.cjs && node tests/verify-v10.cjs && node tests/verify-events.cjs && node tests/verify-horizon.cjs && node tests/verify-min-pitch.cjs && node tests/verify-spatial-update.cjs && node tests/verify-ladder-snapping.cjs && node tests/verify-world-move.cjs && node tests/verify-transform-snapping.cjs && node tests/verify-release.cjs",
+    "qa": "node tools/make-qa.mjs",
+    "desktop": "electron desktop",
+    "package:win": "node tools/package-desktop.mjs",
+    "package:portable": "npm run build && npm run package:win && node tools/package-portable.mjs",
+    "manual": "python -X utf8 tools/build-manual.py"
+  },
+  "devDependencies": {
+    "@electron/packager": "20.1.1",
+    "electron": "44.7.2",
+    "electron-builder": "26.15.3",
+    "jsdom": "30.1.2",
+    "playwright-core": "1.62.1",
+    "terser": "5.46.1"
+  },
+  "description": "Offline level diagrams and gameplay curves",
+  "license": "SEE LICENSE IN LICENSE"
+}
