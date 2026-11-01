@@ -1,0 +1,94 @@
+name: Refresh existing 1.1 downloads
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/refresh-1.1.yml']
+permissions:
+  contents: write
+concurrency:
+  group: publish-release
+  cancel-in-progress: false
+jobs:
+  refresh:
+    if: ${{ contains(github.event.head_commit.message, '[refresh-1.1]') }}
+    runs-on: windows-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: npm test
+      - run: python -X utf8 tools/build-manual.py
+      - run: npm run package:portable
+      - name: Check real directory and portable applications
+        shell: pwsh
+        run: |
+          $env:STUDIO_EXE=(Resolve-Path '.build/desktop/关卡简图工坊-win32-x64/关卡简图工坊.exe').Path
+          node tests/desktop-smoke.cjs
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          node tests/portable-smoke.cjs
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - run: python -X utf8 tools/package-release.py
+      - name: Back up the exact previous release
+        shell: pwsh
+        run: |
+          if ((Get-Content package.json -Raw | ConvertFrom-Json).version -ne '1.1.0') { throw 'Wrong version' }
+          $release=gh api repos/$env:GITHUB_REPOSITORY/releases/tags/v1.1.0 | ConvertFrom-Json
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          if ($release.id -ne 430650199 -or $release.draft -or $release.immutable) { throw 'Unexpected release state' }
+          $sum=$release.assets | Where-Object name -eq 'SHA256SUMS.txt'
+          if ($sum.digest -ne 'sha256:25f3f6269b44bc20c6853f5439b5d4d47b74f8b9af920a3ca1d60889df5a9fee') { throw 'Release changed since refresh was authorized' }
+          New-Item -ItemType Directory -Force '.build/previous-release' | Out-Null
+          $release | ConvertTo-Json -Depth 30 | Set-Content '.build/previous-release/release-metadata.json' -Encoding utf8
+          gh release download v1.1.0 --dir '.build/previous-release/assets'
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          foreach ($asset in $release.assets) {
+            $file=Join-Path '.build/previous-release/assets' $asset.name
+            $hash=(Get-FileHash -LiteralPath $file -Algorithm SHA256).Hash.ToLower()
+            if ($asset.digest -ne "sha256:$hash") { throw "Backup checksum mismatch: $($asset.name)" }
+          }
+      - uses: actions/upload-artifact@v4
+        with:
+          name: previous-1.1-downloads
+          path: .build/previous-release/
+          compression-level: 0
+          include-hidden-files: true
+          retention-days: 30
+      - name: Replace downloads without changing version or existing tag
+        shell: pwsh
+        run: |
+          $assets=Get-ChildItem release -File | Sort-Object @{Expression={$_.Name -eq 'SHA256SUMS.txt'}},Name
+          $previous=Get-Content '.build/previous-release/release-metadata.json' -Raw | ConvertFrom-Json
+          if ($assets.Count -ne 8) { throw 'Expected eight release assets' }
+          if (Compare-Object ($assets.Name | Sort-Object) ($previous.assets.name | Sort-Object)) { throw 'Asset names changed' }
+          try {
+            foreach ($file in $assets) {
+              gh release upload v1.1.0 $file.FullName --clobber
+              if ($LASTEXITCODE -ne 0) { throw "Upload failed: $($file.Name)" }
+            }
+            $remote=(gh api repos/$env:GITHUB_REPOSITORY/releases/tags/v1.1.0 | ConvertFrom-Json).assets
+            if ($LASTEXITCODE -ne 0 -or $remote.Count -ne 8) { throw 'Release asset verification failed' }
+            foreach ($file in $assets) {
+              $hash=(Get-FileHash -LiteralPath $file.FullName -Algorithm SHA256).Hash.ToLower()
+              $asset=$remote | Where-Object name -eq $file.Name
+              if ($asset.digest -ne "sha256:$hash") { throw "Published checksum mismatch: $($file.Name)" }
+            }
+            $notes=Get-Content 'docs/1.1更新说明.md' -Raw
+            $notes+="`n`n本次附件构建提交：https://github.com/$env:GITHUB_REPOSITORY/commit/$env:GITHUB_SHA`n版本标签保留最初发布记录；本次完整源码请下载附件中的 Source.zip。`n"
+            $notes | Set-Content '.build/refresh-notes.md' -Encoding utf8
+            gh release edit v1.1.0 --notes-file '.build/refresh-notes.md' --latest
+            if ($LASTEXITCODE -ne 0) { throw 'Release notes update failed' }
+          } catch {
+            $problem=$_
+            $backups=Get-ChildItem '.build/previous-release/assets' -File
+            foreach ($file in $backups) {
+              gh release upload v1.1.0 $file.FullName --clobber
+              if ($LASTEXITCODE -ne 0) { Write-Warning "Restore failed: $($file.Name)" }
+            }
+            throw $problem
+          }

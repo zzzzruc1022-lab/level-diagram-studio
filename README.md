@@ -47,7 +47,7 @@ npm test
 python -X utf8 tools/build-manual.py
 ```
 
-网页产物是 `dist/index.html`，可以直接离线打开或作为静态网站部署。`src/help/content.json` 同时驱动内置和外部教程，教学媒体在 `src/help/`，构建时嵌入，不可漏带。
+构建同时生成两个产物：`dist/index.html` 是完整离线单文件；`dist/web/` 用于网站部署，教学图片按需加载。网页部署需上传整个 `dist/web/`，不能只复制其中的 HTML。本地预览运行 `node tools/serve-web.mjs`，打开 `http://127.0.0.1:10436/`。`src/help/content.json` 同时驱动内置和外部教程；`src/help/` 的原始教学媒体必须保留，离线版仍全部嵌入。
 
 在 Windows 构建桌面版：
 

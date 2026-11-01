@@ -1,5 +1,7 @@
 import {readFileSync,writeFileSync,mkdirSync} from 'node:fs';
 import {minify} from 'terser';
+import {createHash} from 'node:crypto';
+import {gzipSync} from 'node:zlib';
 const root=new URL('../',import.meta.url);
 const read=p=>readFileSync(new URL(p,root),'utf8');
 const modules=['model','geometry','model-features','curved-geometry','creation-colors','model-v10','scale-model','vendor/polygon-clipping','edge-geometry','geometry-cache','render','render-features','view-features','advanced-render','edge-render','scale-render','legend','map-info','basemap-model','basemap-render','route-occlusion','app'];
@@ -20,10 +22,24 @@ const helpMarkup=`<div class="help-layout"><nav class="help-directory" aria-labe
 const release=JSON.parse(read('src/release-notes.json'));
 const updateNotice=`<dialog id="update-notice" aria-labelledby="update-title"><div class="update-heading"><h2 id="update-title">关卡简图工坊 1.1 更新</h2><button type="button" id="update-close" aria-label="关闭更新公告" autofocus>×</button></div><div class="update-body"><ol>${release.items.map(t=>`<li>${esc(t)}</li>`).join('')}</ol><p><a href="${release.download}" target="_blank" rel="noopener noreferrer">GitHub 下载 Windows 版和离线网页版</a></p><p>演示视频：<a href="${release.video}" target="_blank" rel="noopener noreferrer">在 B 站观看九项更新演示</a></p></div><div class="update-footer"><button type="button" id="update-continue" class="primary">开始使用</button></div></dialog>`;
 const notices='polygon-clipping — pinned commit 82b0ac2c35304bfea9cac24eabcbda32a808ee55\nhttps://github.com/mfogel/polygon-clipping\nBundled and minified for this offline editor; source vendor file unchanged.\n\n'+read('src/vendor/polygon-clipping.LICENSE.md')+'\n\n'+(read('src/vendor/polygon-clipping.js').match(/\/\*[\s\S]*?\*\//g)||[]).join('\n')+'\n\n'+read('src/vendor/Apache-2.0.txt');
-const html=read('src/editor.html').replace('</head>',()=>'<script type="text/plain" id="third-party-notices">'+notices.replaceAll('</','<\\/')+'</script></head>').replace('<!--UPDATE_NOTICE-->',()=>updateNotice).replace('<!--HELP_CONTENT-->',()=>helpMarkup).replace(/HELP_([A-Z]+)_(GIF|POSTER)/g,(_,id,kind)=>helpAsset(id,kind)).replace('/*EDITOR_CSS*/',()=>css).replace('/*EDITOR_JS*/',()=>result.code)
+const template=read('src/editor.html').replace('</head>',()=>'<script type="text/plain" id="third-party-notices">'+notices.replaceAll('</','<\\/')+'</script></head>').replace('<!--UPDATE_NOTICE-->',()=>updateNotice).replace('<!--HELP_CONTENT-->',()=>helpMarkup).replace('/*EDITOR_CSS*/',()=>css).replace('/*EDITOR_JS*/',()=>result.code)
   .replace('SEED_JSON',()=>read('data/initial-project.json').replaceAll('</','<\\/'));
+const html=template.replace(/HELP_([A-Z]+)_(GIF|POSTER)/g,(_,id,kind)=>helpAsset(id,kind));
 mkdirSync(new URL('dist/',root),{recursive:true});
 writeFileSync(new URL('dist/index.html',root),html);
 writeFileSync(new URL('dist/THIRD-PARTY-NOTICES.txt',root),notices);
-writeFileSync(new URL('dist/build-report.json',root),JSON.stringify({sourceJS:Buffer.byteLength(source),publishedJS:Buffer.byteLength(result.code),html:Buffer.byteLength(html)},null,2));
-console.log('Built Level Diagram Studio 1.1: '+Buffer.byteLength(html)+' bytes');
+// Online delivery keeps the same editor; teaching media is fetched only when used.
+// Offline HTML and desktop continue to embed every asset and need no connection.
+mkdirSync(new URL('dist/web/assets/help/',root),{recursive:true});
+const webAssets=new Map();
+const web=template.replace('img-src data: blob:;',"img-src &#39;self&#39; data: blob:;")
+ .replace(/HELP_([A-Z]+)_(GIF|POSTER)/g,(_,id,kind)=>{
+  const key=id+kind;if(webAssets.has(key))return webAssets.get(key);
+  const ext=kind==='GIF'?'gif':'png',data=readFileSync(new URL(`src/help/${id.toLowerCase()}.${ext}`,root));
+  const name=`assets/help/${id.toLowerCase()}.${createHash('sha256').update(data).digest('hex').slice(0,12)}.${ext}`;
+  writeFileSync(new URL('dist/web/'+name,root),data);webAssets.set(key,name);return name;
+ }).replaceAll('decoding="async"','decoding="async" loading="lazy"');
+writeFileSync(new URL('dist/web/index.html',root),web);
+writeFileSync(new URL('dist/web/THIRD-PARTY-NOTICES.txt',root),notices);
+writeFileSync(new URL('dist/build-report.json',root),JSON.stringify({sourceJS:Buffer.byteLength(source),publishedJS:Buffer.byteLength(result.code),html:Buffer.byteLength(html),webHTML:Buffer.byteLength(web),offlineGzip:gzipSync(html).length,webGzip:gzipSync(web).length,webHelpAssets:[...webAssets.values()]},null,2));
+console.log(`Built Level Diagram Studio 1.1: offline ${Buffer.byteLength(html)} bytes; web ${Buffer.byteLength(web)} bytes`);

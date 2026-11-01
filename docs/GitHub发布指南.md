@@ -17,7 +17,7 @@
 5. 网址一般形如 `https://你的用户名.github.io/level-diagram-studio/`。以 GitHub 实际显示的网址为准，发布前这个示例地址不可用。
 6. 把网址填到仓库右侧 About 的 Website，并放进 B 站视频简介。观众打开后即可使用工具，无需 GitHub 账号。
 
-工作流只上传由 dist/index.html 组成的独立网站目录，不发布源码和检查日志到网站。网站没有后端或数据库，所有编辑在访问者自己的浏览器完成；自动暂存不会成为多人共享工程。若更换域名或路径，请让用户先下载工程 JSON。
+工作流只上传 dist/web/ 中的网页和按需加载的教学素材，不发布源码和检查日志到网站。dist/index.html 继续用于离线版与桌面打包。网站没有后端或数据库，所有编辑在访问者自己的浏览器完成；自动暂存不会成为多人共享工程。若更换域名或路径，请让用户先下载工程 JSON。
 
 首次发布或更新可能需等待一段时间。若未出现 deploy，检查 Source 是否选了 GitHub Actions、工作流是否启用、默认分支是否为 main。请先用桌面浏览器实际打开页面，创建组件并下载 JSON / PNG，再填写视频简介。
 
@@ -40,7 +40,7 @@
 
 ## 其他静态托管
 
-也可将构建后的 dist/index.html 作为网站根目录的 index.html，上传至支持 HTTPS 的静态网站托管服务。无需购买数据库或配置 Node 后端。具体服务的访问速度、额度和地区可用性应在发布时实际验证；现有在线地址见本文开头。
+也可将构建后的 dist/web/ 全部内容上传至支持 HTTPS 的静态网站托管服务，保持 index.html 与 assets/ 的相对位置。无需购买数据库或配置 Node 后端。单文件 dist/index.html 也能托管，但会一次下载全部教学媒体，不具备新版网站的按需加载收益。具体服务的访问速度、额度和地区可用性应在发布时实际验证；现有在线地址见本文开头。
 
 官方参考：
 - https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site

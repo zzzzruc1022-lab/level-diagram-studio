@@ -20,7 +20,7 @@ jobs:
       - run: npm ci
       - run: npm run build
       - run: npm test
-      - run: mkdir -p .build/site && cp dist/index.html .build/site/index.html
+      - run: mkdir -p .build/site && cp -R dist/web/. .build/site/
       - uses: actions/upload-pages-artifact@v3
         if: github.event_name != 'pull_request'
         with:
