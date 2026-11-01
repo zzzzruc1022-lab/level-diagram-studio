@@ -37,8 +37,8 @@ window.addEventListener('blur',()=>finishEventOrder(true));
 document.addEventListener('keydown',e=>{if(eventOrderDrag&&(e.key==='Escape'||(e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='z')){e.preventDefault();e.stopImmediatePropagation();finishEventOrder(true)}},true);
 
 function beginEventLabelPointer(e,q,code){
- if(lastTextClick?.id===code&&Date.now()-lastTextClick.time<450){lastTextClick=null;beginEditing(null,code);e.preventDefault();return}
- lastTextClick={id:code,time:Date.now()};const id=code.slice(6),event=doc().curve.events.find(e=>e.id===id);selectEventLabel(id);drag={kind:'event-text',id,before:snapshot(),start:q,last:q,offset:[...R.eventLabelOffset(event)],changed:false};canvas.style.cursor='move';capture(e);
+ const doubleClick=lastTextClick?.id===code&&Date.now()-lastTextClick.time<450;
+ const wasSelected=curveText===code;lastTextClick={id:code,time:Date.now()};const id=code.slice(6),event=doc().curve.events.find(e=>e.id===id);selectEventLabel(id);if(!wasSelected){beginSelectionOnly(e,q);return}drag={kind:'event-text',clickEdit:doubleClick?{code}:null,id,before:snapshot(),start:q,last:q,offset:[...R.eventLabelOffset(event)],changed:false};canvas.style.cursor='move';capture(e);
 }
 function moveEventLabel(q){
  const delta=M.sub(q,drag.start);if(!drag.changed&&Math.hypot(...delta)<pixel()*4)return;

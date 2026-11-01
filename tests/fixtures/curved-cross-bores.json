@@ -1,0 +1,242 @@
+{
+  "format": "level-spatial-editor",
+  "version": 8,
+  "activeDocument": "o-mvw53607-5wdcpf4",
+  "documents": [
+    {
+      "id": "o-mvw53607-5wdcpf4",
+      "type": "space",
+      "name": "四面贯通性能样例",
+      "width": 1200,
+      "height": 800,
+      "background": "#ffffff",
+      "gridVisible": false,
+      "objects": [
+        {
+          "id": "o-mvw53607-u70wtho",
+          "type": "wall",
+          "name": "墙壁1",
+          "floor": "o-mvw53607-54mecb1",
+          "position": [
+            500,
+            400,
+            0
+          ],
+          "orientation": [
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1
+          ],
+          "visible": true,
+          "locked": false,
+          "opacity": 1,
+          "points": [
+            [
+              -200,
+              0
+            ],
+            [
+              200,
+              0
+            ],
+            [
+              200,
+              200
+            ],
+            [
+              -200,
+              200
+            ]
+          ],
+          "thickness": 180,
+          "fill": "#dce6f2",
+          "stroke": "#7693af",
+          "width": 1.5,
+          "wallPath": {
+            "points": [
+              [
+                -200,
+                0
+              ],
+              [
+                200,
+                0
+              ]
+            ],
+            "curves": [
+              0.35
+            ],
+            "height": 200
+          },
+          "equalArc": true
+        },
+        {
+          "id": "o-mvw53607-kmxiymx",
+          "type": "hole",
+          "name": "空洞1",
+          "floor": "o-mvw53607-54mecb1",
+          "position": [
+            600,
+            400,
+            0
+          ],
+          "orientation": [
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1
+          ],
+          "visible": true,
+          "locked": false,
+          "opacity": 1,
+          "host": "o-mvw53607-u70wtho",
+          "edgeCut": true,
+          "shape": "ellipse",
+          "points": [
+            [
+              -60,
+              40
+            ],
+            [
+              60,
+              40
+            ],
+            [
+              60,
+              160
+            ],
+            [
+              -60,
+              160
+            ]
+          ],
+          "cut": {
+            "origin": [
+              0,
+              0,
+              0
+            ],
+            "r": [
+              1,
+              0,
+              0
+            ],
+            "d": [
+              0,
+              0,
+              1
+            ],
+            "n": [
+              0,
+              -1,
+              0
+            ]
+          }
+        },
+        {
+          "id": "o-mvw53607-ctw9e2w",
+          "type": "hole",
+          "name": "空洞2",
+          "floor": "o-mvw53607-54mecb1",
+          "position": [
+            600,
+            400,
+            0
+          ],
+          "orientation": [
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1
+          ],
+          "visible": true,
+          "locked": false,
+          "opacity": 1,
+          "host": "o-mvw53607-u70wtho",
+          "edgeCut": true,
+          "shape": "ellipse",
+          "points": [
+            [
+              -60,
+              40
+            ],
+            [
+              60,
+              40
+            ],
+            [
+              60,
+              160
+            ],
+            [
+              -60,
+              160
+            ]
+          ],
+          "cut": {
+            "origin": [
+              0,
+              0,
+              0
+            ],
+            "r": [
+              0,
+              1,
+              0
+            ],
+            "d": [
+              0,
+              0,
+              1
+            ],
+            "n": [
+              1,
+              0,
+              0
+            ]
+          }
+        }
+      ],
+      "counters": {
+        "plane": 1,
+        "text": 1,
+        "wall": 1,
+        "hole": 2
+      },
+      "floors": [
+        {
+          "id": "o-mvw53607-54mecb1",
+          "name": "一层",
+          "height": 0,
+          "visible": true
+        }
+      ],
+      "activeFloor": "o-mvw53607-54mecb1",
+      "unit": "单位",
+      "heightReferences": true,
+      "stairArrows": true,
+      "planeColors": {
+        "used": [
+          "#dce8df"
+        ],
+        "last": "#dce8df"
+      }
+    }
+  ]
+}

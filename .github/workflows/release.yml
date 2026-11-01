@@ -1,0 +1,51 @@
+name: Publish versioned Windows release
+on:
+  push:
+    branches: [main]
+    paths: ['package.json', '.github/workflows/release.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: publish-release
+  cancel-in-progress: false
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: npm test
+      - run: python -X utf8 tools/build-manual.py
+      - run: npm run package:portable
+      - name: Check actual packaged application
+        shell: pwsh
+        run: |
+          $env:STUDIO_EXE=(Resolve-Path '.build/desktop/关卡简图工坊-win32-x64/关卡简图工坊.exe').Path
+          node tests/desktop-smoke.cjs
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - run: python -X utf8 tools/package-release.py
+      - name: Create draft, upload all files, then publish
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $version=(Get-Content package.json -Raw | ConvertFrom-Json).version
+          $tag="v$version"
+          $existing=gh release view $tag --json isDraft 2>$null
+          if ($LASTEXITCODE -eq 0) {
+            if (-not ($existing | ConvertFrom-Json).isDraft) { throw "Release already published: $tag" }
+          } else {
+            gh release create $tag --target '${{ github.sha }}' --title "关卡简图工坊 $version" --notes-file 'docs/1.1更新说明.md' --draft
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          }
+          $assets=Get-ChildItem release -File | ForEach-Object { $_.FullName }
+          gh release upload $tag @assets --clobber
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          gh release edit $tag --draft=false --latest
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }

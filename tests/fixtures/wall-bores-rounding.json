@@ -1,0 +1,237 @@
+{
+  "format": "level-spatial-editor",
+  "version": 8,
+  "documents": [
+    {
+      "id": "o-mvw50jn9-nnyic3d",
+      "type": "space",
+      "name": "墙洞与图例试用",
+      "width": 1200,
+      "height": 800,
+      "background": "#ffffff",
+      "gridVisible": true,
+      "objects": [
+        {
+          "id": "o-mvw50jnc-r3jvsfl",
+          "type": "wall",
+          "name": "墙壁1",
+          "floor": "o-mvw50jn9-588k4yw",
+          "position": [
+            300,
+            400,
+            0
+          ],
+          "orientation": [
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1
+          ],
+          "visible": true,
+          "locked": false,
+          "opacity": 1,
+          "points": [
+            [
+              0,
+              0
+            ],
+            [
+              400,
+              0
+            ],
+            [
+              400,
+              200
+            ],
+            [
+              0,
+              200
+            ]
+          ],
+          "thickness": 180,
+          "fill": "#dce6f2",
+          "stroke": "#7693af",
+          "width": 1.5
+        },
+        {
+          "id": "o-mvw50jv0-kc7rwr9",
+          "type": "hole",
+          "name": "空洞1",
+          "floor": "o-mvw50jn9-588k4yw",
+          "position": [
+            600,
+            400,
+            0
+          ],
+          "orientation": [
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1
+          ],
+          "visible": true,
+          "locked": false,
+          "opacity": 1,
+          "edgeCut": true,
+          "host": "o-mvw50jnc-r3jvsfl",
+          "cut": {
+            "origin": [
+              200.0000213817426,
+              0,
+              100
+            ],
+            "r": [
+              1,
+              0,
+              0
+            ],
+            "d": [
+              0,
+              0,
+              -1
+            ],
+            "n": [
+              0,
+              1,
+              0
+            ]
+          },
+          "points": [
+            [
+              -59.99999935206836,
+              -54.999990281026044
+            ],
+            [
+              59.99999935206836,
+              -54.999990281026044
+            ],
+            [
+              59.99999935206836,
+              54.999990281026044
+            ],
+            [
+              -59.99999935206836,
+              54.999990281026044
+            ]
+          ],
+          "shape": "ellipse"
+        },
+        {
+          "id": "o-mvw50k0s-qutehak",
+          "type": "hole",
+          "name": "空洞2",
+          "floor": "o-mvw50jn9-588k4yw",
+          "position": [
+            600,
+            400,
+            0
+          ],
+          "orientation": [
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1
+          ],
+          "visible": true,
+          "locked": false,
+          "opacity": 1,
+          "edgeCut": true,
+          "host": "o-mvw50jnc-r3jvsfl",
+          "cut": {
+            "origin": [
+              200,
+              9.718974069983233e-07,
+              99.99998971408587
+            ],
+            "r": [
+              0,
+              -1,
+              0
+            ],
+            "d": [
+              0,
+              0,
+              -1
+            ],
+            "n": [
+              1,
+              0,
+              0
+            ]
+          },
+          "points": [
+            [
+              -59.99999967603412,
+              -55.00000656030744
+            ],
+            [
+              59.999999676034236,
+              -55.00000656030744
+            ],
+            [
+              59.999999676034236,
+              55.00000656030744
+            ],
+            [
+              -59.99999967603412,
+              55.00000656030744
+            ]
+          ],
+          "shape": "ellipse"
+        }
+      ],
+      "counters": {
+        "plane": 4,
+        "text": 1,
+        "wall": 1,
+        "hole": 2,
+        "route": 2,
+        "marker": 1
+      },
+      "floors": [
+        {
+          "id": "o-mvw50jn9-588k4yw",
+          "name": "一层",
+          "height": 0,
+          "visible": true
+        }
+      ],
+      "activeFloor": "o-mvw50jn9-588k4yw",
+      "unit": "单位",
+      "heightReferences": true,
+      "stairArrows": true,
+      "planeColors": {
+        "used": [
+          "#dce8df",
+          "#eedbdf",
+          "#f0d2bc",
+          "#e6daed"
+        ],
+        "last": "#e6daed"
+      },
+      "scaleSettings": {
+        "enabled": true,
+        "metersPerUnit": 0.02,
+        "gridStep": 40,
+        "snapStep": 10,
+        "followGrid": false
+      }
+    }
+  ],
+  "activeDocument": "o-mvw50jn9-nnyic3d"
+}

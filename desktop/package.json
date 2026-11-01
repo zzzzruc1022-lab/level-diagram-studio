@@ -1,7 +1,7 @@
 {
   "name": "level-diagram-studio-desktop",
   "productName": "关卡简图工坊",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "main": "main.cjs",
   "private": true,
   "description": "Level Diagram Studio - offline editor"

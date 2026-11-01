@@ -1,0 +1,27 @@
+/* Checkbox toggles the feature; the adjacent name opens its settings. */
+#space-options .scale-tool { display: inline-flex; align-items: center; gap: 0; flex: 0 0 auto; }
+#space-options .scale-tool[hidden] { display: none; }
+#space-options .scale-tool > .check { min-width: 24px; min-height: 28px; margin: 0; padding: 0 5px; justify-content: center; cursor: pointer; }
+#space-options .scale-tool > button { display: inline-flex; align-items: center; gap: 6px; min-height: 28px; padding: 2px 6px; border: 1px solid transparent; background: transparent; color: var(--ui-text); font: inherit; white-space: nowrap; }
+#space-options .scale-tool > button > span { color: var(--ui-muted); font-size: 12px; line-height: 1; }
+#space-options .scale-tool > button:hover { border-color: var(--ui-border); background: var(--ui-hover); }
+#space-options .scale-tool > button[aria-expanded="true"] { border-color: var(--ui-accent); background: var(--ui-selected); color: var(--ui-accent); }
+body .scale-popover { position: fixed; z-index: 90; width: 320px; box-sizing: border-box; overflow: auto; overscroll-behavior: contain; padding: 14px; border: 1px solid var(--ui-border); border-radius: 10px; background: var(--ui-panel); color: var(--ui-text); box-shadow: var(--ui-shadow); line-height: 1.55; }
+body .scale-popover[hidden] { display: none; }
+body #scale-settings.scale-popover, body #boundary-settings.scale-popover { margin: 0; padding: 14px; }
+.scale-popover-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+.scale-popover-heading h2 { margin: 0; font-size: 14px; font-weight: 650; color: var(--ui-text); }
+.scale-popover-heading button { min-width: 28px; min-height: 28px; padding: 0; background: transparent; color: var(--ui-muted); font-size: 20px; }
+.scale-popover .field { display: flex; flex-direction: column; gap: 6px; margin: 12px 0; color: var(--ui-muted); }
+.scale-popover .field :is(input,select) { box-sizing: border-box; width: 100%; min-width: 0; }
+.scale-popover .check { display: flex; align-items: flex-start; gap: 7px; margin: 12px 0 6px; color: var(--ui-text); }
+.scale-popover .check input { margin-top: 4px; }
+.scale-popover :is(p,small) { overflow-wrap: anywhere; }
+.scale-popover :is(.muted,small) { color: var(--ui-muted); }
+.scale-popover > small { display: block; margin-top: 7px; }
+.scale-popover hr { border: 0; border-top: 1px solid var(--ui-border); margin: 14px 0; }
+.scale-popover details { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--ui-border); }
+.scale-popover summary { cursor: pointer; color: var(--ui-text); }
+.scale-popover-actions { display: flex; flex-wrap: wrap; gap: 6px; }
+.scale-popover .measurement-note { margin: 10px 0; color: var(--ui-muted); }
+.scale-popover .measurement-error { color: var(--ui-danger); }

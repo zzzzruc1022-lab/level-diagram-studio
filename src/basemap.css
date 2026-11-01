@@ -1,0 +1,29 @@
+#import-basemap { width: 100%; margin-top: 8px; padding: 8px 10px; border: 1px solid var(--ui-border); color: var(--ui-accent); background: var(--ui-field); }
+#basemap-settings { margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--ui-border); scroll-margin-top: 64px; }
+#basemap-settings h2 { font-size: 14px; margin: 0 0 12px; }
+#basemap-settings .field { display: block; margin: 13px 0; color: var(--ui-muted); font-size: 12px; }
+#basemap-settings .field input { width: 100%; margin-top: 7px; min-width: 0; }
+#basemap-settings .check { margin: 12px 0; gap: 8px; }
+#basemap-settings small { display: block; color: var(--ui-muted); line-height: 1.65; margin-top: 9px; }
+#basemap-settings details { margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--ui-border); }
+#basemap-settings summary { font-size: 12px; color: var(--ui-text); cursor: pointer; padding: 4px 0; }
+.basemap-summary, .basemap-view-note, .basemap-calibration-count { color: var(--ui-muted); font-size: 12px; line-height: 1.65; }
+.basemap-buttons { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0; }
+.basemap-buttons button, #basemap-settings > button, #basemap-settings details > button { padding: 8px 10px; border: 1px solid var(--ui-border); background: var(--ui-field); }
+.basemap-buttons button.primary { background: var(--ui-accent); color: var(--ui-accent-text); }
+.basemap-size-fields { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; }
+#basemap-calibration-error { color: var(--ui-danger); }
+#basemap-known-distance[aria-invalid=true] { border-color: var(--ui-danger); }
+#basemap-mode-hint { position: absolute; z-index: 23; top: 12px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 10px; width: max-content; max-width: min(430px,calc(100% - 24px)); padding: 9px 12px; border-radius: 9px; background: var(--ui-panel); color: var(--ui-text); box-shadow: var(--ui-shadow); font-size: 12px; line-height: 1.5; }
+#basemap-mode-hint span { min-width: 0; }
+#basemap-mode-hint button { flex-shrink: 0; color: var(--ui-accent); border: 1px solid var(--ui-border); padding: 6px 8px; }
+#basemap-resolution-dialog { max-width: min(480px,calc(100vw - 36px)); padding: 24px; }
+#basemap-resolution-dialog h2 { font-size: 18px; margin: 0 0 14px; }
+#basemap-resolution-dialog p { line-height: 1.7; font-size: 13px; color: var(--ui-muted); }
+#stage.basemap-drop-target { outline: 3px solid var(--ui-accent); outline-offset: -3px; }
+#basemap-handles { pointer-events: none; }
+#basemap-handles [data-basemap-handle], #basemap-handles path[fill=transparent] { pointer-events: all; }
+
+#basemap-handles :is([data-crop-corner],[data-crop-edge]) {pointer-events:all;cursor:crosshair}
+#image-layers button[aria-pressed=true] {background:var(--ui-accent-soft);color:var(--ui-accent);outline:1px solid var(--ui-accent);outline-offset:-1px}
+@container (max-width:200px) {.basemap-size-fields {grid-template-columns:1fr}}

@@ -1,12 +1,16 @@
 # 关卡简图工坊
 
+[在线使用](https://zzzzruc1022-lab.github.io/level-diagram-studio/) · [下载 Windows / 离线 HTML](https://github.com/zzzzruc1022-lab/level-diagram-studio/releases/latest) · [九项更新演示](https://www.bilibili.com/video/BV1Saxb6PEYc/)
+
+1.1 新增比例尺与公制单位、地图边界、圆弧与弯墙、跨边缘空洞、图片组件、图例与指北针、布局配色、路线空间遮挡和重叠选择。旧工程可继续打开，原有坐标和大小比例保持不变。[查看完整更新说明](docs/1.1更新说明.md)。
+
 用于关卡策划的轻量绘图工具：画空间布局，也整理游玩节奏。无需账号，可离线使用。
 
 ![空间立体示意](docs/空间图_立体.png)
 
 ## 开始使用
 
-- **在线使用**：仓库启用 GitHub Pages 后，在仓库右侧 About 或 Settings → Pages 获取网址。打开网址即可绘图，无需安装。
+- **在线使用**：[打开关卡简图工坊](https://zzzzruc1022-lab.github.io/level-diagram-studio/)，无需安装。
 - **Windows**：从仓库的 Releases 下载 `LevelDiagramStudio-1.0.0-Windows-x64.exe`，双击启动。单文件便携版无需安装，首次启动会解包到临时目录；适用于 Windows 10/11 x64。
 - **离线网页**：下载 Releases 中的 HTML，或下载仓库后打开 `dist/index.html`。推荐桌面版 Chrome / Edge。
 

@@ -1,10 +1,10 @@
 {
   "name": "level-diagram-studio",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "scripts": {
     "build": "node tools/build.mjs",
-    "test": "node tests/verify-v7.cjs && node tests/verify-v8.cjs && node tests/verify-v9.cjs && node tests/verify-v10.cjs && node tests/verify-events.cjs && node tests/verify-horizon.cjs && node tests/verify-min-pitch.cjs && node tests/verify-spatial-update.cjs && node tests/verify-ladder-snapping.cjs && node tests/verify-world-move.cjs && node tests/verify-transform-snapping.cjs && node tests/verify-release.cjs",
+    "test": "node tests/verify-v7.cjs && node tests/verify-v8.cjs && node tests/verify-v9.cjs && node tests/verify-v10.cjs && node tests/verify-events.cjs && node tests/verify-horizon.cjs && node tests/verify-min-pitch.cjs && node tests/verify-spatial-update.cjs && node tests/verify-ladder-snapping.cjs && node tests/verify-world-move.cjs && node tests/verify-transform-snapping.cjs && node tests/verify-release.cjs && node tests/verify-scale.cjs && node tests/verify-interaction.cjs && node tests/verify-edge-cuts.cjs && node tests/verify-scale-refinement.cjs && node tests/verify-walls-legend.cjs && node tests/verify-map-info.cjs && node tests/verify-legend-background.cjs && node tests/verify-audit-curve.cjs && node tests/verify-audit-geometry.cjs && node tests/verify-appearance.cjs && node tests/verify-workspace.cjs && node tests/verify-scale-toolbar.cjs && node tests/verify-basemap.cjs && node tests/verify-route-occlusion.cjs && node tests/verify-wall-overlap.cjs && node tests/verify-update-notice.cjs",
     "qa": "node tools/make-qa.mjs",
     "desktop": "electron desktop",
     "package:win": "node tools/package-desktop.mjs",

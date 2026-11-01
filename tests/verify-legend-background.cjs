@@ -1,0 +1,40 @@
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),vm=require('node:vm'),{JSDOM}=require('jsdom');
+const root=path.resolve(__dirname,'..'),context=vm.createContext({console});context.window=context;
+for(const name of ['model','geometry','model-features','curved-geometry','creation-colors','model-v10','scale-model','vendor/polygon-clipping','edge-geometry','geometry-cache','render','render-features','view-features','advanced-render','edge-render','scale-render'])vm.runInContext(fs.readFileSync(path.join(root,'src',name+'.js'),'utf8'),context);
+const M=context.StudioModel,R=context.StudioRender,plain=x=>JSON.parse(JSON.stringify(x)),parse=markup=>new JSDOM(`<svg xmlns="http://www.w3.org/2000/svg">${markup}</svg>`,{contentType:'image/svg+xml'}).window.document;
+const legacy=JSON.parse(fs.readFileSync(path.join(__dirname,'fixtures/scale-legacy-project.json'),'utf8')),before=plain(M.validate(legacy));
+for(const name of ['legend','map-info'])vm.runInContext(fs.readFileSync(path.join(root,'src',name+'.js'),'utf8'),context);
+assert.deepEqual(plain(M.validate(legacy)),before,'appearance is optional and does not rewrite old geometry or defaults');
+const d=M.createDocument('space','图例背景回归'),initial=JSON.stringify(d),r={x:0,y:0,w:1200,h:800},view={mode:'plan',side:'front'};
+assert.deepEqual(plain(M.legendAppearance(d)),{mode:'canvas',color:d.background});assert.equal(JSON.stringify(d),initial,'reading defaults never writes optional metadata');
+d.objects=[];for(const type of ['plane','route','marker'])d.objects.push(M.createObject(d,type,[300,300,0]));
+d.objects[0].fill='#9a764b';d.objects[0].stroke='#574431';d.objects[1].color='#bc7539';d.objects[2].fill='#ffffff';d.objects[2].color='#ff0000';d.objects[2].text='P';
+M.refreshLegend(d);d.legend.enabled=true;d.legend.scope='all';d.legend.entries.forEach(e=>{e.enabled=true;e.description='读图说明'});
+d.scaleSettings={enabled:true,metersPerUnit:.02,gridStep:40,snapStep:10,followGrid:false};d.mapInfo={...M.mapInfo(d),northEnabled:true,rulerPlacement:'footer',northPlacement:'footer'};
+const geometry=JSON.stringify(d.objects),symbols=JSON.stringify(d.legend.entries.map(e=>M.legendSymbols(d,e))),scene=()=>R.scene(d,view,{}),layout=()=>R.exportFooter(d,scene(),r,1200,view),project=()=>({format:'level-spatial-editor',version:7,activeDocument:d.id,documents:[d]});
+const lum=c=>[1,3,5].map(i=>parseInt(c.slice(i,i+2),16)/255).map(x=>x<=.04045?x/12.92:((x+.055)/1.055)**2.4).reduce((sum,v,i)=>sum+v*[.2126,.7152,.0722][i],0),contrast=(a,b)=>(Math.max(lum(a),lum(b))+.05)/(Math.min(lum(a),lum(b))+.05);
+const heights=[];
+for(const color of ['#ffffff','#000000','#151d2d','#ffff00','#007777','#777777','#eadcc5']){
+ d.background=color;delete d.legendAppearance;const t=R.legendTheme(d),footer=layout(),svg=parse(footer.markup);heights.push(footer.height);
+ assert.equal(t.background,color);assert(contrast(t.color,color)>=4.5,'all body text uses readable contrast');
+ for(const rect of svg.querySelectorAll('[data-legend-background]'))assert.equal(rect.getAttribute('fill'),color,'legend and map-information backgrounds agree');
+ const title=svg.querySelector('text');assert.equal(title.getAttribute('fill'),t.color);assert.equal(title.getAttribute('stroke'),t.halo);assert.equal(title.getAttribute('paint-order'),'stroke');
+ for(const entry of svg.querySelectorAll('[data-legend-entry]'))for(const text of entry.querySelectorAll(':scope > text'))assert.equal(text.getAttribute('fill'),t.color,'name and description follow background');
+ assert.equal(svg.querySelector('[data-scale-bar]').getAttribute('fill'),t.color,'footer ruler contrast follows footer background');
+ assert.equal(svg.querySelector('[data-north-arrow] text').getAttribute('fill'),t.color,'footer north contrast follows footer background');
+ assert.equal(JSON.stringify(d.objects),geometry);assert.equal(JSON.stringify(d.legend.entries.map(e=>M.legendSymbols(d,e))),symbols,'source category colors are never rewritten');
+ assert(!footer.markup.includes('<image'),'flat background requires no raster contrast calculation');
+}
+assert(heights.every(h=>h===heights[0]),'background changes preserve output layout dimensions');
+d.background='#ffffff';d.legendAppearance={mode:'custom',color:'#151d2d'};let svg=parse(layout().markup);assert.equal(M.legendBackground(d),'#151d2d');assert.equal(svg.querySelector('text').getAttribute('fill'),'#ffffff');
+d.background='#efdaaa';assert.equal(M.legendBackground(d),'#151d2d','custom background is independent from canvas');d.legendAppearance.mode='canvas';assert.equal(M.legendBackground(d),'#efdaaa');assert.equal(d.legendAppearance.color,'#151d2d','switching follow mode retains saved custom color');d.legendAppearance.mode='custom';assert.equal(M.legendBackground(d),'#151d2d');
+const saved=plain(project());assert.deepEqual(plain(M.validate(JSON.parse(JSON.stringify(saved)))),saved,'saved appearance roundtrips exactly');
+for(const bad of [null,[],true,'custom',{}, {mode:'custom'},{color:'#ffffff'},{mode:'auto',color:'#ffffff'},{mode:'custom',color:'#fff'},{mode:'canvas',color:'red'},{mode:'custom',color:'#ffffff" onclick="x'},{mode:'custom',color:123}]){d.legendAppearance=bad;assert.throws(()=>M.validate(project()),/图例背景/)}
+d.legendAppearance={mode:'custom',color:'#ABCDEF'};assert.equal(M.validate(project()).documents[0].legendAppearance.color,'#ABCDEF','case-insensitive six-digit color accepted');
+d.legendAppearance={mode:'custom',color:'#000000'};d.background='#ffffff';d.legend.enabled=false;let footer=layout();svg=parse(footer.markup);assert.equal(footer.height,110,'information-only footer uses same appearance');assert.equal(svg.querySelector('rect').getAttribute('fill'),'#000000');assert.equal(svg.querySelector('[data-scale-bar]').getAttribute('fill'),'#ffffff');
+d.mapInfo.northPlacement='map';d.mapInfo.rulerPlacement='map';assert.equal(layout().height,0);const north=parse(R.mapNorth(d,scene(),r,1200,800,view));assert.equal(north.querySelector('text').getAttribute('fill'),'#000000','map arrow still follows map background');assert.equal(parse(R.scaleBar(d,r,1200,800)).querySelector('[data-scale-bar]').getAttribute('fill'),'#000000','map ruler still follows map background');
+const marker={kind:'marker',fill:'#ffffff',stroke:'#999999',color:'#ff0000',text:'P',opacity:1};let glyph=parse(R.legendSample(marker,0,0,60,24,'#000000')).querySelector('text');assert.equal(glyph.getAttribute('fill'),'#000000','opaque white marker uses its own fill, not footer');marker.opacity=.1;glyph=parse(R.legendSample(marker,0,0,60,24,'#000000')).querySelector('text');assert.equal(glyph.getAttribute('fill'),'#ffffff','translucent marker text uses composite fill');assert.equal(marker.color,'#ff0000','glyph adaptation is render-only');
+marker.opacity=0;for(const bg of ['#ffffff','#000000','#151d2d'])assert.equal(R.legendSample(marker,0,0,60,24,bg),'','fully transparent marker emits neither contrast edge nor text');
+const route=parse(R.legendSample({kind:'line',color:'#bc7539',style:'dashed',arrow:'end',opacity:.4},0,0,60,24,'#000000'));assert(route.querySelector('[stroke="#bc7539"]'));assert(route.querySelector('[stroke="#ffffff"]'));assert.equal(route.querySelector('svg > g').getAttribute('opacity'),'0.4','transparent route opacity includes halo without muddying main color');
+assert.equal(JSON.stringify(d.objects),geometry,'all appearance operations preserve geometry');
+console.log('PASS legend background: optional legacy metadata, following/custom isolation, readable light/dark text and outlines, source color semantics, composited marker labels, shared footer info and independent map furniture, dimensions and JSON roundtrip.');

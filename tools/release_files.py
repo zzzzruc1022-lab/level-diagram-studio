@@ -1,7 +1,7 @@
 """Public release allowlist; never traverse private QA, caches or user data."""
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
-DOCS=['使用说明.md','使用说明.html','GitHub发布指南.md','最终检查记录.md','空间图_平面.png','空间图_立面.png','空间图_立体.png','曲线图_总览.png','曲线图_事件.png']
+DOCS=['1.1更新说明.md','使用说明.md','使用说明.html','GitHub发布指南.md','最终检查记录.md','空间图_平面.png','空间图_立面.png','空间图_立体.png','曲线图_总览.png','曲线图_事件.png']
 def source_files():
  files=[]
  for directory in ['src','desktop','tools','tests','data','.github','third_party']:

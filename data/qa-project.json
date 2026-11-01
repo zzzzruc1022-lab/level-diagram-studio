@@ -3,7 +3,7 @@
   "version": 7,
   "documents": [
     {
-      "id": "o-mv9c70ih-baw8dpm",
+      "id": "o-mve140mp-evjcwcc",
       "type": "space",
       "name": "轻量空间示例",
       "width": 1200,
@@ -12,10 +12,10 @@
       "gridVisible": true,
       "objects": [
         {
-          "id": "o-mv9c70ii-j9fdtu7",
+          "id": "o-mve140mq-rbvyvbj",
           "type": "plane",
           "name": "一层平台",
-          "floor": "o-mv9c70ii-dtex1x2",
+          "floor": "o-mve140mp-bablmms",
           "position": [
             560,
             430,
@@ -59,10 +59,10 @@
           "width": 1.5
         },
         {
-          "id": "o-mv9c70ii-q2ay3uz",
+          "id": "o-mve140mq-h68gqt5",
           "type": "plane",
           "name": "二层平台",
-          "floor": "o-mv9c70ii-zve6y7t",
+          "floor": "o-mve140mp-zfegp1f",
           "position": [
             740,
             260,
@@ -106,10 +106,10 @@
           "width": 1.5
         },
         {
-          "id": "o-mv9c70ii-ddfjept",
+          "id": "o-mve140mq-lns597s",
           "type": "wall",
           "name": "墙壁1",
-          "floor": "o-mv9c70ii-dtex1x2",
+          "floor": "o-mve140mp-bablmms",
           "position": [
             560,
             260,
@@ -153,10 +153,10 @@
           "width": 1.5
         },
         {
-          "id": "o-mv9c70ii-ga8rn8t",
+          "id": "o-mve140mq-0accw8t",
           "type": "hole",
           "name": "空洞1",
-          "floor": "o-mv9c70ii-dtex1x2",
+          "floor": "o-mve140mp-bablmms",
           "position": [
             0,
             0,
@@ -176,7 +176,7 @@
           "visible": true,
           "locked": false,
           "opacity": 1,
-          "host": "o-mv9c70ii-ddfjept",
+          "host": "o-mve140mq-lns597s",
           "points": [
             [
               -60,
@@ -197,10 +197,10 @@
           ]
         },
         {
-          "id": "o-mv9c70ii-0e8c1e1",
+          "id": "o-mve140mq-l4q0s4k",
           "type": "hole",
           "name": "圆形空洞",
-          "floor": "o-mv9c70ii-dtex1x2",
+          "floor": "o-mve140mp-bablmms",
           "position": [
             0,
             0,
@@ -220,7 +220,7 @@
           "visible": true,
           "locked": false,
           "opacity": 1,
-          "host": "o-mv9c70ii-j9fdtu7",
+          "host": "o-mve140mq-rbvyvbj",
           "points": [
             [
               -75,
@@ -242,10 +242,10 @@
           "shape": "ellipse"
         },
         {
-          "id": "o-mv9c70ii-8uhw360",
+          "id": "o-mve140mq-apx5cf3",
           "type": "stairs",
           "name": "楼梯1",
-          "floor": "o-mv9c70ii-dtex1x2",
+          "floor": "o-mve140mp-bablmms",
           "position": [
             780,
             450,
@@ -267,7 +267,7 @@
           "opacity": 1,
           "flights": [
             {
-              "id": "o-mv9c70ii-ky3i9jt",
+              "id": "o-mve140mq-xyhp89x",
               "points": [
                 [
                   -35,
@@ -300,10 +300,10 @@
           "riseSpacing": 14
         },
         {
-          "id": "o-mv9c70ii-1qiv20q",
+          "id": "o-mve140mq-723r4oo",
           "type": "ladder",
           "name": "爬梯1",
-          "floor": "o-mv9c70ii-dtex1x2",
+          "floor": "o-mve140mp-bablmms",
           "position": [
             830,
             280,
@@ -326,7 +326,7 @@
           "span": 45,
           "start": 0,
           "end": 160,
-          "rungs": 10,
+          "rungs": 9,
           "fill": "#e8dfce",
           "stroke": "#9f8a68",
           "width": 1,
@@ -337,10 +337,10 @@
           "railWidth": 6
         },
         {
-          "id": "o-mv9c70ii-iwnlij8",
+          "id": "o-mve140mq-jl2e5rr",
           "type": "spiral",
           "name": "旋转楼梯1",
-          "floor": "o-mv9c70ii-dtex1x2",
+          "floor": "o-mve140mp-bablmms",
           "position": [
             380,
             420,
@@ -377,10 +377,10 @@
           "riseSpacing": 14
         },
         {
-          "id": "o-mv9c70ii-x5imh36",
+          "id": "o-mve140mq-b9ilqk4",
           "type": "text",
           "name": "文字1",
-          "floor": "o-mv9c70ii-dtex1x2",
+          "floor": "o-mve140mp-bablmms",
           "position": [
             600,
             550,
@@ -414,10 +414,10 @@
           "glyphColor": "#ffffff"
         },
         {
-          "id": "o-mv9c70ii-meqo0x8",
+          "id": "o-mve140mq-mm55r3t",
           "type": "text",
           "name": "文字2",
-          "floor": "o-mv9c70ii-zve6y7t",
+          "floor": "o-mve140mp-zfegp1f",
           "position": [
             740,
             260,
@@ -451,10 +451,10 @@
           "glyphColor": "#ffffff"
         },
         {
-          "id": "o-mv9c70ii-yfsaqb7",
+          "id": "o-mve140mq-m0autbb",
           "type": "route",
           "name": "路线1",
-          "floor": "o-mv9c70ii-dtex1x2",
+          "floor": "o-mve140mp-bablmms",
           "position": [
             500,
             540,
@@ -501,14 +501,15 @@
           "style": "solid",
           "curve": "smooth",
           "arrow": "end",
-          "outlineWidth": 0,
-          "outlineColor": "#ffffff"
+          "outlineWidth": 0.5,
+          "outlineColor": "#000000",
+          "outlineMode": "auto"
         },
         {
-          "id": "o-mv9c70ii-70qqif6",
+          "id": "o-mve140mq-g6gm9gg",
           "type": "plane",
           "name": "椭圆模板",
-          "floor": "o-mv9c70ii-dtex1x2",
+          "floor": "o-mve140mp-bablmms",
           "position": [
             990,
             510,
@@ -565,19 +566,19 @@
       },
       "floors": [
         {
-          "id": "o-mv9c70ii-dtex1x2",
+          "id": "o-mve140mp-bablmms",
           "name": "一层",
           "height": 0,
           "visible": true
         },
         {
-          "id": "o-mv9c70ii-zve6y7t",
+          "id": "o-mve140mp-zfegp1f",
           "name": "二层",
           "height": 160,
           "visible": true
         }
       ],
-      "activeFloor": "o-mv9c70ii-dtex1x2",
+      "activeFloor": "o-mve140mp-bablmms",
       "unit": "单位",
       "heightReferences": true,
       "stairArrows": true,
@@ -592,7 +593,7 @@
       }
     },
     {
-      "id": "o-mv9c70ij-kgcgsyd",
+      "id": "o-mve140mq-yvk2pan",
       "type": "curve",
       "name": "通用曲线示例",
       "width": 1400,
@@ -612,17 +613,17 @@
           "max": 10,
           "ticks": [
             {
-              "id": "o-mv9c70ij-qeq44g9",
+              "id": "o-mve140mq-5r58pve",
               "label": "0",
               "value": 0
             },
             {
-              "id": "o-mv9c70ij-tzl0ghq",
+              "id": "o-mve140mq-sje0s92",
               "label": "5",
               "value": 5
             },
             {
-              "id": "o-mv9c70ij-4ps013v",
+              "id": "o-mve140mq-4acrtla",
               "label": "10",
               "value": 10
             }
@@ -635,17 +636,17 @@
           "max": 1,
           "ticks": [
             {
-              "id": "o-mv9c70ij-531uxnq",
+              "id": "o-mve140mq-pg1ma8i",
               "label": "低",
               "value": 0
             },
             {
-              "id": "o-mv9c70ij-xbgbuvi",
+              "id": "o-mve140mq-5cnpxag",
               "label": "中",
               "value": 0.5
             },
             {
-              "id": "o-mv9c70ij-bswn0p2",
+              "id": "o-mve140mq-qrh5z5c",
               "label": "高",
               "value": 1
             }
@@ -654,44 +655,44 @@
         },
         "stages": [
           {
-            "id": "o-mv9c70ij-kvs1xio",
+            "id": "o-mve140mq-x3e26gd",
             "label": "阶段1",
             "color": "#8fa9c3"
           },
           {
-            "id": "o-mv9c70ij-d70h9e8",
+            "id": "o-mve140mq-t9y1vx4",
             "label": "阶段2",
             "color": "#94af9c"
           },
           {
-            "id": "o-mv9c70ij-lx0uehi",
+            "id": "o-mve140mq-li7p0nd",
             "label": "阶段3",
             "color": "#b9a0bb"
           }
         ],
         "events": [
           {
-            "id": "o-mv9c70ij-svvlfe5",
+            "id": "o-mve140mq-zksrbju",
             "label": "事件1",
-            "stage": "o-mv9c70ij-kvs1xio",
+            "stage": "o-mve140mq-x3e26gd",
             "fraction": 0.5,
             "x": 0.16666666666666666,
             "y": 0.25,
             "labelPosition": "above"
           },
           {
-            "id": "o-mv9c70ij-kw09zdn",
+            "id": "o-mve140mq-mpgbnd9",
             "label": "事件2",
-            "stage": "o-mv9c70ij-d70h9e8",
+            "stage": "o-mve140mq-t9y1vx4",
             "fraction": 0.5,
             "x": 0.5,
             "y": 0.75,
             "labelPosition": "above"
           },
           {
-            "id": "o-mv9c70ij-hxkuw3o",
+            "id": "o-mve140mq-hw5p7mb",
             "label": "事件3",
-            "stage": "o-mv9c70ij-lx0uehi",
+            "stage": "o-mve140mq-li7p0nd",
             "fraction": 0.5,
             "x": 0.8333333333333334,
             "y": 0.45,
@@ -713,5 +714,5 @@
       }
     }
   ],
-  "activeDocument": "o-mv9c70ih-baw8dpm"
+  "activeDocument": "o-mve140mp-evjcwcc"
 }

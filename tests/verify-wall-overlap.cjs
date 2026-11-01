@@ -1,0 +1,18 @@
+const fs=require('fs'),path=require('path'),assert=require('assert/strict'),{JSDOM,VirtualConsole}=require('jsdom');
+const errors=[],vc=new VirtualConsole();vc.on('jsdomError',e=>errors.push(e.message));
+const dom=new JSDOM(fs.readFileSync(path.join(__dirname,'../dist/index.html'),'utf8'),{runScripts:'dangerously',url:'https://qa.local/overlap',pretendToBeVisual:true,virtualConsole:vc,beforeParse(w){w.localStorage.setItem('level-diagram-studio:notice:1.1.0','seen');w.HTMLCanvasElement.prototype.getContext=()=>null;w.HTMLElement.prototype.getBoundingClientRect=()=>({left:0,top:0,width:1000,height:700});w.HTMLDialogElement.prototype.showModal=function(){this.setAttribute('open','')};w.HTMLDialogElement.prototype.close=function(){this.removeAttribute('open')}}});
+try{const w=dom.window,M=w.StudioModel,R=w.StudioRender,A=w.SpatialEditor,D=w.document;A.createDocument('space','重叠选择回归');const d=A.document;d.objects=[];
+ const stair=M.createObject(d,'stairs',[500,400,0]);stair.flights[0].points=[[-110,45],[-110,-45],[110,-45],[110,45]];const wall=M.createObject(d,'wall',[500,250,0]),wall2=M.createObject(d,'wall',[500,550,0]),far=M.createObject(d,'stairs',[1400,400,0]);d.objects.push(stair,wall,wall2,far);const view={mode:'elevation',side:'front'};
+ for(const [lo,hi] of [[-105,120],[-120,105],[-105,105]]){wall.points=[[lo,0],[hi,0],[hi,200],[lo,200]];const s=R.scene(d,view,{tolerance:1});assert(R.wallOverlap(s,d,wall.id).some(o=>o.id===stair.id),'partly protruding stairs');assert(!R.wallOverlap(s,d,wall.id).some(o=>o.id===far.id))}
+ let s=R.scene(d,view,{tolerance:1}),band=s.stairPickBands.find(b=>b.id===stair.id),gap;for(let x=390;x<610&&!gap;x+=1)for(let y=200;y<800;y+=1){const q=[x,y];if(M.inside(q,band.poly)&&!s.faces.some(f=>f.owner.id===stair.id&&M.inside(q,f.poly))){gap=q;break}}assert(gap,'fixture must exercise an actual step gap');assert(R.pickAll(gap,s,d,view,{through:true}).some(h=>h.id===stair.id));assert.notEqual(R.pickAll(gap,s,d,view)[0].id,stair.id,'ordinary click still respects the front wall');
+ const off=[395,band.poly.reduce((n,p)=>Math.min(n,p[1]),Infinity)+5];assert(!M.inside(off,band.poly));assert(!R.pickAll(off,s,d,view,{through:true}).some(h=>h.id===stair.id),'no whole bounding rectangle hit');
+ stair.locked=true;s=R.scene(d,view);assert(R.wallOverlap(s,d,wall.id).some(o=>o.locked));stair.visible=false;s=R.scene(d,view);assert(!R.wallOverlap(s,d,wall.id).some(o=>o.id===stair.id));assert(!s.stairPickBands.some(b=>b.id===stair.id));stair.visible=true;stair.locked=false;
+ assert(!R.scene(d,{mode:'plan'}).stairPickBands);assert(!R.scene(d,{mode:'solid',azimuth:45,pitch:30}).stairPickBands);
+ // Exact projection overlap must exclude a hole and reject overlapping bounding boxes alone.
+ const rect=(x,y,r,b)=>[[x,y],[r,y],[r,b],[x,b]],fake=(a,b,cutouts=[])=>({faces:[{owner:wall,poly:a,cutouts},{owner:stair,poly:b,cutouts:[]}],hits:[],tolerance:1});
+ assert.equal(R.wallOverlap(fake(rect(0,0,100,100),rect(40,40,60,60),[rect(30,30,70,70)]),d,wall.id).length,0);
+ assert.equal(R.wallOverlap(fake([[0,0],[100,0],[0,100]],[[100,100],[100,60],[60,100]]),d,wall.id).length,0);
+ assert(R.wallOverlap(fake(rect(0,0,100,100),rect(99.9,40,140,60)),d,wall.id).some(o=>o.id===stair.id));
+ A.setTool('select');D.querySelector('[data-view=elevation]').click();const before=JSON.stringify(d),svg=A.renderSVG();assert(!/stairPickBands|pick-help|data-overlap-wall/.test(svg));assert.equal(JSON.stringify(d),before);assert.deepEqual(errors,[]);
+ console.log('PASS wall overlap: left/right/both protrusion, true step gap, front wall occlusion, narrow band, hidden/locked states, view scoping, holes, disjoint polygons, tiny intersection, export/data invariance.');
+}finally{dom.window.close()}

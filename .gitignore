@@ -1,0 +1,15 @@
+node_modules/
+.build/
+.playwright-cli/
+dist/qa.html
+dist/build-report.json
+*.log
+
+qa/
+release/
+*.exe
+*.zip
+__pycache__/
+.env
+.env.*
+release-upload/

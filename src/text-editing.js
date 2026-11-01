@@ -23,7 +23,7 @@ function finishEditing(cancel=false){
  if(cancel){project=JSON.parse(edit.before);prune();status('已取消文字与字号编辑')}
  else{edit.target[edit.key]=$('#inline-editor').innerText?.replaceAll('\r','')??$('#inline-editor').textContent;if(edit.code?.startsWith('tick:'))edit.target.customLabel=true;history(edit.before)}render();
 }
-function inlineKeys(e){e.stopPropagation();if(composingKey(e))return;if(e.key==='Escape'){e.preventDefault();finishEditing(true)}else if(e.key==='Enter'&&(e.ctrlKey||e.metaKey)){e.preventDefault();finishEditing()}}
+function inlineKeys(e){e.stopPropagation();if(composingKey(e))return;if(e.key==='Escape'){e.preventDefault();finishEditing(true);canvasFocus()}else if(e.key==='Enter'&&(e.ctrlKey||e.metaKey)){e.preventDefault();finishEditing();canvasFocus()}}
 $('#inline-editor').addEventListener('input',()=>{if(!editing)return;editing.target[editing.key]=$('#inline-editor').innerText??$('#inline-editor').textContent;const field=$(editing.code?.startsWith('event:')?'[data-event-name="'+editing.code.slice(6)+'"]':editing.code==='curve:title'?'#curve-title':editing.code==='curve:subtitle'?'#curve-subtitle':editing.code==='axis:x'?'#xAxis-title':editing.code==='axis:y'?'#yAxis-title':editing.code?'#curveText-value':'textarea[data-scope="prop"][data-key="text"]');if(field)field.value=editing.target[editing.key];drawCanvas();positionInlineEditor()});
 $('#inline-editor').addEventListener('keydown',inlineKeys);
 $('#inline-font-size').addEventListener('pointerdown',()=>{if(!editing)return;const s=window.getSelection();if(s.rangeCount&&$('#inline-editor').contains(s.anchorNode))editing.range=s.getRangeAt(0).cloneRange()});

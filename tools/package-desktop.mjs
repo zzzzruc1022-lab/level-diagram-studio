@@ -17,7 +17,7 @@ const version=JSON.parse(readFileSync(path.join(root,'node_modules/electron/pack
 const results=await packager({dir:staging,name:'关卡简图工坊',platform:'win32',arch:'x64',
  out:path.join(root,'.build','desktop'),overwrite:true,asar:true,prune:false,
  electronVersion:version,electronZipDir:process.env.ELECTRON_ZIP_DIR||undefined,icon:path.join(root,'desktop','icon.ico'),
- appVersion:'1.0.0',buildVersion:'1.0.0',
+ appVersion:JSON.parse(readFileSync(path.join(root,'package.json'),'utf8')).version,buildVersion:JSON.parse(readFileSync(path.join(root,'package.json'),'utf8')).version,
  win32metadata:{ProductName:'关卡简图工坊',FileDescription:'Level Diagram Studio',CompanyName:'Level Diagram Studio'}});
 console.log(results.join('\n'));
 const manualFiles=['使用说明.html','使用说明.md','空间图_平面.png','空间图_立面.png','空间图_立体.png','曲线图_总览.png','曲线图_事件.png','导出图稿_预览.png','事件名称排序_拖动中.png'];

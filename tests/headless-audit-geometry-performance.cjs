@@ -1,0 +1,14 @@
+const fs=require('node:fs'),path=require('node:path'),{chromium}=require('playwright-core');
+const root=path.resolve(__dirname,'..'),out=path.join(root,'qa/full-review-2026-10-31/geometry'),fixture=path.join(root,'qa/full-review-2026-10-31/building/中庭与连桥复合建筑_试用工程.json');
+(async()=>{const browser=await chromium.launch({headless:true,channel:'chrome'}),page=await browser.newPage({viewport:{width:1440,height:1000}}),errors=[],report={kind:'Single sequential headless Chrome sample; no FPS guarantee or stress load',errors};page.on('pageerror',e=>errors.push(e.message));try{
+ await page.route('http://127.0.0.1:10435/',route=>route.fulfill({contentType:'text/html',body:require('./audit-geometry-runtime.cjs')()}));await page.goto('http://127.0.0.1:10435/');const choose=page.waitForEvent('filechooser');await page.locator('[data-action="import"]').click();await(await choose).setFiles(fixture);await page.waitForFunction(()=>SpatialEditor.document?.objects?.length===25);
+ report.scene=await page.evaluate(()=>({objects:SpatialEditor.document.objects.length,floors:SpatialEditor.document.floors.length,types:SpatialEditor.document.objects.reduce((s,o)=>(s[o.type]=(s[o.type]||0)+1,s),{})}));
+ await page.evaluate(()=>{window.auditRenderTimes=[];const render=StudioRender.scene;StudioRender.scene=function(...args){const t=performance.now(),result=render.apply(this,args);auditRenderTimes.push({mode:args[1].mode,ms:performance.now()-t,faces:result.faces.length});return result}});
+ const settle=()=>page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+ let t=performance.now();await page.locator('[data-view="solid"]').click();await settle();report.firstSolidMs=performance.now()-t;
+ await page.locator('[data-view="plan"]').click();await settle();t=performance.now();await page.locator('[data-view="solid"]').click();await settle();report.warmSolidMs=performance.now()-t;
+ const b=await page.locator('#stage').boundingBox();report.orbitAzimuthBefore=await page.locator('#azimuth').inputValue();await page.mouse.move(b.x+20,b.y+20);await page.mouse.down();report.orbitMs=[];
+ for(let i=1;i<=10;i++){t=performance.now();await page.mouse.move(b.x+20+i*5,b.y+20+i*2);await settle();report.orbitMs.push(performance.now()-t)}await page.mouse.up();report.orbitAzimuthAfter=await page.locator('#azimuth').inputValue();report.renderTimes=await page.evaluate(()=>auditRenderTimes);
+ report.note='First solid is first BSP/render partition after import; geometry already warmed by plan import. Warm solid returns to same camera. Orbit wall-clock includes automation and two animation-frame settle; scene ms times JS scene construction only.';
+ await page.screenshot({path:path.join(out,'complex-building-orbit.png')});
+}catch(e){report.fatal=e.message}finally{await browser.close();fs.writeFileSync(path.join(out,'complex-building-performance.json'),JSON.stringify(report,null,2));console.log(JSON.stringify(report))}})();

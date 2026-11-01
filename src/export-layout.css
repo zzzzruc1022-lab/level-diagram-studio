@@ -1,0 +1,165 @@
+/* Export layout B: file settings, artwork preview, and map information. */
+#export-dialog {
+  width: min(1480px, calc(100vw - 40px));
+  height: min(940px, calc(100dvh - 40px));
+  max-width: calc(100vw - 40px);
+  max-height: calc(100dvh - 40px);
+  padding: 0;
+  overflow: hidden;
+  color: var(--ui-text);
+  background: var(--ui-panel);
+  border: 1px solid var(--ui-border);
+  border-radius: 16px;
+}
+#export-dialog .dialog-heading {
+  height: 60px;
+  margin: 0;
+  padding: 0 20px;
+  border-bottom: 1px solid var(--ui-border);
+}
+#export-dialog .dialog-heading h2 { font-size: 17px; }
+#export-dialog .dialog-heading button { display: grid; place-items: center; width: 32px; height: 32px; min-height: 32px; padding: 0; line-height: 1; }
+#export-dialog .export-layout {
+  display: grid;
+  grid-template-columns: 210px minmax(0, 1fr) 300px;
+  height: calc(100% - 60px);
+  gap: 0;
+  min-height: 0;
+}
+#export-dialog .export-output {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  min-width: 0;
+  padding: 20px 16px;
+  overflow: auto;
+  background: var(--ui-panel);
+  border-right: 1px solid var(--ui-border);
+  scrollbar-gutter: stable;
+}
+#export-output-title { font-size: 14px; line-height: 1.5; margin: 0 0 2px; color: var(--ui-text); }
+#export-dialog .export-visual {
+  margin: 16px;
+  background: var(--ui-bg);
+  border-color: var(--ui-border);
+  border-radius: 10px;
+}
+#export-dialog .preview-bar {
+  min-height: 49px;
+  padding: 8px 10px;
+  gap: 6px;
+  flex-wrap: wrap;
+  background: var(--ui-panel);
+  border-color: var(--ui-border);
+}
+#export-dialog .preview-bar button { padding: 5px 8px; min-height: 30px; font-size: 12px; color: var(--ui-text); background: var(--ui-field); border-color: var(--ui-border); }
+#export-dialog .preview-bar button.primary-soft { color: var(--ui-accent); background: var(--ui-selected); }
+#export-dialog .preview-bar small { font-size: 11px; color: var(--ui-muted); }
+#export-zoom { font-size: 12px; font-variant-numeric: tabular-nums; color: var(--ui-muted); }
+#export-dialog #export-legend-preview {
+  background: var(--ui-bg);
+  border-color: var(--ui-border);
+}
+#export-dialog #export-legend-preview:has(> p) { flex: 0 0 auto; min-height: 48px; }
+#export-dialog #export-legend-preview > p { color: var(--ui-muted); line-height: 1.5; }
+#export-dialog .export-settings {
+  padding: 0;
+  min-width: 0;
+  background: var(--ui-panel);
+  border-left: 1px solid var(--ui-border);
+}
+#export-dialog .export-settings-scroll {
+  gap: 18px;
+  padding: 20px 16px;
+  scrollbar-gutter: stable;
+}
+#export-dialog .export-actions {
+  gap: 8px;
+  padding: 14px 16px 16px;
+  border-color: var(--ui-border);
+  background: var(--ui-panel);
+}
+#export-dialog .export-actions #export-ready {
+  margin: 0 0 2px;
+  color: var(--ui-muted);
+  font-size: 12px;
+  min-height: 18px;
+  overflow-wrap: anywhere;
+  font-variant-numeric: tabular-nums;
+}
+#export-dialog .export-actions button { min-height: 40px; }
+#export-dialog .field { display: block; margin: 0; color: var(--ui-muted); font-size: 12px; line-height: 1.5; }
+#export-dialog .field input, #export-dialog .field select { width: 100%; min-width: 0; margin-top: 7px; }
+#export-dialog .field small { display: block; margin-top: 6px; color: var(--ui-muted); line-height: 1.5; font-size: 11px; }
+#export-dialog input:not([type=checkbox]):not([type=color]),
+#export-dialog select, #export-dialog textarea {
+  color: var(--ui-text);
+  background: var(--ui-field);
+  border: 1px solid var(--ui-border);
+  border-radius: 7px;
+  padding: 9px 10px;
+  font-size: 13px;
+  caret-color: var(--ui-accent);
+}
+#export-dialog input[type=checkbox] { accent-color: var(--ui-accent); }
+#export-dialog input[type=color] { background: var(--ui-field); border-color: var(--ui-border); }
+#export-dialog button { color: var(--ui-text); }
+#export-dialog button:not(:disabled):hover { background: var(--ui-selected); }
+#export-dialog button.primary, #export-dialog .legend-picker [data-legend-action=add-selected],
+#export-dialog .legend-picker [data-legend-action=note] { color: var(--ui-accent-text); background: var(--ui-accent); }
+#export-dialog :is(button,input,select,textarea):disabled { opacity: .5; cursor: not-allowed; }
+#export-dialog :is(button,input,select,textarea,summary):focus-visible { outline: 2px solid var(--ui-accent); outline-offset: 2px; }
+#export-dialog #export-reference-options { gap: 18px; }
+#export-dialog .export-reference-details { padding-bottom: 14px; border-bottom: 1px solid var(--ui-border); }
+#export-dialog .export-reference-details summary { min-height: 26px; color: var(--ui-text); }
+#export-dialog #map-info-controls { gap: 12px; }
+#export-dialog #map-info-title { color: var(--ui-text); font-size: 14px; margin-bottom: 2px; }
+#export-dialog .map-info-row { gap: 8px; }
+#export-dialog .map-info-row select { padding: 7px 6px; font-size: 12px; }
+#export-dialog :is(#map-info-hint,#export-ruler-hint,#legend-background-hint,#legend-editor small,.legend-empty,.legend-visible,.legend-picker p) {
+  color: var(--ui-muted);
+}
+#export-dialog #export-ruler-hint { padding: 8px 10px; background: var(--ui-bg); border-radius: 6px; }
+#export-dialog #export-setup-scale { align-self: flex-start; min-height: 32px; padding: 5px 8px; color: var(--ui-accent); background: var(--ui-selected); }
+#export-dialog :is(#legend-appearance-controls,#legend-editor) { padding-top: 18px; border-color: var(--ui-border); }
+#export-dialog #legend-editor .legend-toolbar { gap: 8px; }
+#export-dialog #legend-editor .legend-toolbar>button { color: var(--ui-accent); background: var(--ui-selected); border-color: var(--ui-border); }
+#export-dialog #legend-editor .legend-toolbar>span { color: var(--ui-muted); }
+#export-dialog .legend-list { border-color: var(--ui-border); }
+#export-dialog .legend-added-row { border-color: var(--ui-border); }
+#export-dialog .legend-row.selected { background: var(--ui-selected); }
+#export-dialog .legend-added-row>.legend-drag { color: var(--ui-muted); }
+#export-dialog .legend-item-main input { padding: 6px 7px; }
+#export-dialog .legend-picker { background: var(--ui-field); border-color: var(--ui-border); }
+#export-dialog .legend-picker-tabs { border-color: var(--ui-border); }
+#export-dialog .legend-picker-tabs [aria-selected=true] { background: var(--ui-selected); color: var(--ui-accent); }
+#export-dialog .legend-candidate { border-color: var(--ui-border); }
+#export-dialog .legend-candidate:hover, #export-dialog .legend-candidate:focus-within { background: var(--ui-selected); }
+#export-dialog .legend-candidate.already-added { background: var(--ui-bg); }
+#export-dialog .legend-multi { background: var(--ui-selected); }
+#export-dialog #legend-editor details>summary { color: var(--ui-text); }
+#export-dialog .legend-drop-target { outline-color: var(--ui-accent); }
+
+@media (max-width: 1199px) {
+  #export-dialog .export-layout { grid-template-columns: 185px minmax(0, 1fr) 280px; }
+  #export-dialog .export-output, #export-dialog .export-settings-scroll { padding: 16px 12px; }
+  #export-dialog .export-visual { margin: 12px; }
+  #export-dialog .preview-bar small { flex-basis: 100%; margin-left: 0; padding-left: 2px; }
+}
+@media (max-width: 959px) {
+  #export-dialog { width: calc(100vw - 24px); max-width: calc(100vw - 24px); height: calc(100dvh - 24px); max-height: calc(100dvh - 24px); }
+  #export-dialog .export-layout { grid-template-columns: minmax(0, 1fr) 280px; grid-template-rows: minmax(180px, 40%) minmax(0, 1fr); }
+  #export-dialog .export-visual { grid-column: 1; grid-row: 1 / 3; }
+  #export-dialog .export-output { grid-column: 2; grid-row: 1; border-right: 0; border-left: 1px solid var(--ui-border); border-bottom: 1px solid var(--ui-border); gap: 14px; }
+  #export-dialog .export-settings { grid-column: 2; grid-row: 2; }
+  #export-dialog .export-settings-scroll { padding-top: 14px; }
+}
+@media (max-width: 639px) {
+  #export-dialog .export-layout { display: flex; flex-direction: column; overflow: auto; }
+  #export-dialog .export-visual { order: -1; min-height: 280px; flex: 0 0 42dvh; }
+  #export-dialog .export-output { overflow: visible; flex: 0 0 auto; border-left: 0; }
+  #export-dialog .export-settings { overflow: visible; flex: 0 0 auto; border-left: 0; }
+  #export-dialog .export-settings-scroll { overflow: visible; }
+  #export-dialog .export-actions { position: sticky; bottom: 0; }
+  #export-dialog .preview-bar small { flex-basis: auto; margin-left: auto; }
+}

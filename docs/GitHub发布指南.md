@@ -1,5 +1,7 @@
 # GitHub 上传与网址发布
 
+当前已完成发布（2026-10-17）：仓库 https://github.com/zzzzruc1022-lab/level-diagram-studio ，在线工具 https://zzzzruc1022-lab.github.io/level-diagram-studio/ ，下载 https://github.com/zzzzruc1022-lab/level-diagram-studio/releases/latest 。以下首次创建步骤供重建参考，后续沿用现有main，不必重建仓库。
+
 ## 上传仓库文件
 
 1. 在 GitHub 新建公开仓库，建议名称 `level-diagram-studio`。许可证不要选择 MIT 等模板，本项目已有 LICENSE 权利保留及使用许可。
@@ -21,12 +23,16 @@
 
 ## 给别人下载 Windows 版
 
-1. 在仓库 Releases → Draft a new release，新建标签 `v1.0.0`。
+1. 在仓库 Releases → Draft a new release，新建标签 `v1.1.0`。
 2. 将“发布附件”中的单文件 EXE、Windows ZIP、离线 HTML、源码 ZIP 和 SHA256SUMS.txt 拖入附件区。
 3. 填写版本说明并发布。EXE 和 Windows ZIP 不要提交到代码仓库，它们可能超过 GitHub 单文件限制。
 4. 普通用户优先下载便携 EXE；ZIP 完整解压后也可运行目录版 EXE，不要从目录版单独拿走 EXE。
 
 程序未做付费代码签名，Windows 可能显示发布者未知。下载校验值在 SHA256SUMS.txt；确认来源及校验后按自己的系统策略决定是否运行。
+
+## 1.1 自动发布
+
+`.github/workflows/release.yml` 在 main 的 package.json 或发布工作流变更时，以及手动触发时运行。云端重新构建、自动回归并启动真实EXE检查，通过后创建版本草稿，上传全部附件，再公开为最新版本。已公开的同名版本不会被覆盖。网页部署继续使用 pages.yml，地址与旧版相同。
 
 ## 后续更新
 
@@ -34,7 +40,7 @@
 
 ## 其他静态托管
 
-也可将构建后的 dist/index.html 作为网站根目录的 index.html，上传至支持 HTTPS 的静态网站托管服务。无需购买数据库或配置 Node 后端。具体服务的访问速度、额度和地区可用性应在发布时实际验证；本交付尚未创建任何公网网站。
+也可将构建后的 dist/index.html 作为网站根目录的 index.html，上传至支持 HTTPS 的静态网站托管服务。无需购买数据库或配置 Node 后端。具体服务的访问速度、额度和地区可用性应在发布时实际验证；现有在线地址见本文开头。
 
 官方参考：
 - https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site

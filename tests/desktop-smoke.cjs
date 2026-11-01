@@ -7,13 +7,13 @@ const profile=fs.mkdtempSync(path.join(os.tmpdir(),'level-diagram-test-'));
 const results={profile,exe,checks:[],errors:[]};
 let app;
 const start=async()=>{
- const a=await _electron.launch({executablePath:exe,args:['--studio-profile='+profile],timeout:60000});
+ const a=await _electron.launch({executablePath:exe,args:['--studio-profile='+profile,'--studio-smoke-hidden'],timeout:60000});
  const p=await a.firstWindow();p.on('pageerror',e=>results.errors.push(e.message));
  await p.waitForFunction(()=>!!window.SpatialEditor);return {a,p};
 };
 (async()=>{
  let {a,p}=await start();app=a;
- assert.equal(await p.title(),'关卡简图工坊 v1.0');
+ assert.equal(await p.title(),'关卡简图工坊 v1.1');
  assert.equal(await p.evaluate(()=>typeof require),'undefined');
  assert(await p.evaluate(()=>window.SpatialEditor.project.documents.length===0));results.checks.push('real EXE starts offline, empty seed, Node unavailable');
  const preferences=await a.evaluate(({BrowserWindow})=>{const w=BrowserWindow.getAllWindows()[0];return w.webContents.getLastWebPreferences()});
@@ -28,13 +28,13 @@ const start=async()=>{
  const sample=path.resolve(__dirname,'../data/qa-project.json');
  await p.evaluate(()=>SpatialEditor.command('import'));await p.locator('#file-input').setInputFiles(sample);
  await p.waitForFunction(()=>SpatialEditor.project.documents.length===2);
- await p.locator('[data-view="solid"]').click();await p.screenshot({path:path.resolve(__dirname,'../docs/桌面版_运行.png')});
+ await p.locator('[data-view="solid"]').click();const shot=await a.evaluate(async({BrowserWindow})=>(await BrowserWindow.getAllWindows()[0].webContents.capturePage(undefined,{stayHidden:true,stayAwake:true})).toPNG().toString('base64'));fs.writeFileSync(path.join(profile,'desktop-running.png'),Buffer.from(shot,'base64'));
  await p.locator('[data-view="plan"]').click();
  // Set a destination on the native DownloadItem in this test process only.
  const prepare=async file=>a.evaluate(({session},file)=>{global.studioDownload=null;session.defaultSession.once('will-download',(_event,item)=>{item.setSavePath(file);item.once('done',(_e,state)=>{global.studioDownload=state})})},file);
  const saved=async()=>{for(let i=0;i<100;i++){const state=await a.evaluate(()=>global.studioDownload);if(state){assert.equal(state,'completed');return}await new Promise(r=>setTimeout(r,100))}throw Error('Native download did not complete')};
  const downloaded=path.join(profile,'工程.json');
- await prepare(downloaded);await p.locator('[data-action="project"]').click();await saved();assert.equal(JSON.parse(fs.readFileSync(downloaded,'utf8')).version,7);results.checks.push('native JSON import and real file download');
+ await prepare(downloaded);await p.locator('[data-action="project"]').click();await saved();assert.deepEqual(JSON.parse(fs.readFileSync(downloaded,'utf8')),await p.evaluate(()=>JSON.parse(JSON.stringify(SpatialEditor.project))));results.checks.push('native JSON import and real file download');
  await p.evaluate(()=>SpatialEditor.command('png'));await p.locator('#export-download').waitFor({state:'visible'});await p.waitForFunction(()=>!document.querySelector('#export-download').disabled);
  const png=path.join(profile,'图稿.png');await prepare(png);await p.locator('#export-download').click();await saved();assert.equal(fs.readFileSync(png).subarray(0,8).toString('hex'),'89504e470d0a1a0a');results.checks.push('PNG preview and real PNG export');
  await p.locator('[data-action="export-close"]').first().click();

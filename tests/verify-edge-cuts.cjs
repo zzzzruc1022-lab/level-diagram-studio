@@ -1,0 +1,27 @@
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),vm=require('node:vm'),{performance}=require('node:perf_hooks');
+const root=path.join(__dirname,'..'),context=vm.createContext({console,performance});context.window=context;
+for(const name of ['model','geometry','model-features','curved-geometry','creation-colors','model-v10','scale-model','vendor/polygon-clipping','edge-geometry','geometry-cache'])vm.runInContext(fs.readFileSync(path.join(root,'src',name+'.js'),'utf8'),context);
+const M=context.window.StudioModel,rect=(x,y,w,h)=>[[x,y],[x+w,y],[x+w,y+h],[x,y+h]],d=M.createDocument('space','跨边空洞验收');d.objects=[];
+const plane=M.createObject(d,'plane',[0,0,0]);plane.points=rect(0,0,200,200);plane.thickness=10;d.objects.push(plane);
+const hole=(host,points,cut)=>{const h=M.createObject(d,'hole');Object.assign(h,{host:host.id,floor:host.floor,points,edgeCut:true});if(cut)h.cut=cut;d.objects.push(h);return h};
+const volume=faces=>Math.abs(faces.reduce((sum,f)=>sum+[f.points,...f.holes].reduce((sum,r)=>sum+r.slice(1,-1).reduce((v,p,i)=>v+M.dot(r[0],M.cross(p,r[i+2]))/6,0),0),0));
+const near=(a,b,message)=>assert(Math.abs(a-b)<.001,message+': '+a+' != '+b);
+const h=hole(plane,rect(150,50,100,100));near(volume(M.geometry(d,plane)),350000,'edge notch');assert(M.validGeometry(d));
+const h2=hole(plane,rect(125,75,100,100));near(volume(M.geometry(d,plane)),312500,'overlap union');assert(M.validGeometry(d));
+h2.points=rect(500,500,20,20);assert(!M.edgeCutIntersects(d,h2));assert(M.validGeometry(d));
+h.points=rect(90,-10,20,220);assert.equal(M.geometry(d,plane).filter(f=>Math.abs(M.faceNormal(f.points)[2])>.99).length,4,'split host has two pieces');near(volume(M.geometry(d,plane)),360000,'split volume');
+const original=plane.points;plane.points=[[0,0],[200,0],[200,50],[50,50],[50,200],[0,200]];h2.points=rect(100,100,20,20);assert(!M.edgeCutIntersects(d,h2),'concave host empty region is not an intersection');plane.points=original;h2.points=rect(500,500,20,20);
+h.points=rect(-10,-10,220,220);assert(!M.validGeometry(d),'reject complete subtraction');h.points=rect(150,50,100,100);
+const p={format:'level-spatial-editor',version:8,activeDocument:d.id,documents:[d]},reopened=M.validate(JSON.parse(JSON.stringify(p)));assert.equal(reopened.version,8);assert.equal(JSON.stringify(reopened.documents[0].objects.find(o=>o.id===h.id).points),JSON.stringify(h.points));
+const wall=M.createObject(d,'wall',[400,0,0]);wall.points=rect(-100,0,200,180);wall.thickness=20;d.objects.push(wall);
+const xy={origin:[0,0,0],r:[1,0,0],d:[0,1,0],n:[0,0,1]},xz={origin:[0,0,0],r:[1,0,0],d:[0,0,1],n:[0,-1,0]};
+const cut=hole(wall,rect(-20,-30,40,60),xy);near(volume(M.geometry(d,wall)),576000,'plan wall through height');
+const door=hole(wall,rect(40,-10,40,80),xz);near(volume(M.geometry(d,wall)),520000,'mixed plan/elevation cuts');assert(M.validGeometry(d));
+const duplicateDoor=hole(wall,M.clone(door.points),M.clone(xz));near(volume(M.geometry(d,wall)),520000,'duplicate bore with mixed cut directions');d.objects=d.objects.filter(o=>o.id!==duplicateDoor.id);
+wall.wallPath={points:[[-100,0],[100,0]],curves:[.35],height:180};wall.equalArc=true;
+const footprint=M.footprint(wall),arc=M.arc(...wall.wallPath.points,.35);for(const p of footprint){const radius=Math.hypot(...M.sub(p,arc.center));assert(Math.abs(Math.abs(radius-arc.radius)-10)<1e-6,'exact radial thickness')}
+assert(M.validGeometry(d),'curved wall mixed cuts');const saved=M.validate(p);assert.equal(saved.version,8);
+const plain=M.clone(d);plain.objects=plain.objects.filter(o=>o.type!=='hole');for(const o of plain.objects){delete o.equalArc;delete o.wallPath}assert(M.validGeometry(plain));
+const legacy=JSON.parse(fs.readFileSync(path.join(root,'data/initial-project.json'),'utf8')),first=M.validate(legacy),second=M.validate(first);assert.equal(JSON.stringify(first),JSON.stringify(second),'legacy reopen idempotent');
+const bad=M.clone(p);bad.documents[0].objects.find(o=>o.id===h.id).cut={origin:[0,0,0],r:[0,0,0],d:[0,0,0],n:[0,0,0]};assert.throws(()=>M.validate(bad));
+console.log('PASS edge cuts: notch / union / outside / disjoint islands / empty rejection / two cut directions / exact wall thickness / schema 8 reopen / legacy compatibility / invalid frame rejection.');
