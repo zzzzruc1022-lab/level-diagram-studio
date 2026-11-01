@@ -31,11 +31,12 @@ with zipfile.ZipFile(archive) as z:
  assert z.testzip() is None
  assert z.read('关卡简图工坊/LICENSE')==(built/'LICENSE').read_bytes()
 shutil.copyfile(portable,out/portable.name)
-(out/'关卡简图工坊_v1.1.html').write_bytes(html)
-shutil.copyfile(root/'docs/使用说明.html',out/'使用说明.html')
-shutil.copyfile(root/'data/two-storey-house.json',out/'两层小楼示例.json')
-shutil.copyfile(root/'data/qa-project.json',out/'空间与曲线示例.json')
+(out/f'LevelDiagramStudio-{version}-Offline.html').write_bytes(html)
+shutil.copyfile(root/'docs/使用说明.html',out/'UserGuide.html')
+shutil.copyfile(root/'data/two-storey-house.json',out/'Example-TwoStoreyHouse.json')
+shutil.copyfile(root/'data/qa-project.json',out/'Example-SpaceAndCurve.json')
 sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
-artifacts=[p for p in out.iterdir() if p.is_file() and p.name!='SHA256SUMS.txt']
+artifacts=[source,archive,out/portable.name,out/f'LevelDiagramStudio-{version}-Offline.html',out/'UserGuide.html',out/'Example-TwoStoreyHouse.json',out/'Example-SpaceAndCurve.json']
+assert all(p.name.isascii() for p in artifacts), 'GitHub release filenames must be ASCII to avoid name collisions'
 (out/'SHA256SUMS.txt').write_text(''.join(sha(p)+'  '+p.name+'\n' for p in sorted(artifacts)),encoding='utf-8')
 print(json.dumps({'sourceFiles':len(files),'downloads':{p.name:p.stat().st_size for p in artifacts}},ensure_ascii=False))

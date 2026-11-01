@@ -2,7 +2,7 @@ name: Publish versioned Windows release
 on:
   push:
     branches: [main]
-    paths: ['package.json', '.github/workflows/release.yml', 'tools/release_files.py']
+    paths: ['package.json', '.github/workflows/release.yml', 'tools/release_files.py', 'tools/package-release.py']
   workflow_dispatch:
 permissions:
   contents: write
@@ -40,6 +40,13 @@ jobs:
           $existing=gh release view $tag --json isDraft 2>$null
           if ($LASTEXITCODE -eq 0) {
             if (-not ($existing | ConvertFrom-Json).isDraft) { throw "Release already published: $tag" }
+            gh release edit $tag --target '${{ github.sha }}'
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+            $draftAssets=(gh release view $tag --json assets | ConvertFrom-Json).assets
+            foreach ($asset in $draftAssets) {
+              gh release delete-asset $tag $asset.name --yes
+              if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+            }
           } else {
             gh release create $tag --target '${{ github.sha }}' --title "关卡简图工坊 $version" --notes-file 'docs/1.1更新说明.md' --draft
             if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
@@ -47,5 +54,7 @@ jobs:
           $assets=Get-ChildItem release -File | ForEach-Object { $_.FullName }
           gh release upload $tag @assets --clobber
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $uploaded=(gh release view $tag --json assets | ConvertFrom-Json).assets
+          if ($uploaded.Count -ne $assets.Count) { throw 'Release asset count mismatch' }
           gh release edit $tag --draft=false --latest
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
